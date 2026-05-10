@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Europe 2026 — Family Itinerary Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ---------- Clay Design System Tokens ---------- */
+:root {
+  /* Surfaces */
+  --canvas:          #fffaf0;
+  --surface-soft:    #faf5e8;
+  --surface-card:    #f5f0e0;
+  --surface-strong:  #ebe6d6;
+  --surface-dark:    #0a1a1a;
+
+  /* Text */
+  --ink:        #0a0a0a;
+  --body-str:   #1a1a1a;
+  --body:       #3a3a3a;
+  --muted:      #6a6a6a;
+  --muted-soft: #9a9a9a;
+
+  /* Borders */
+  --hairline:      #e5e5e5;
+  --hairline-soft: #f0f0f0;
+
+  /* Brand colors */
+  --primary:     #0a0a0a;
+  --on-primary:  #ffffff;
+  --brand-pink:  #ff4d8b;
+  --brand-teal:  #1a3a3a;
+  --brand-lav:   #b8a4ed;
+  --brand-peach: #ffb084;
+  --brand-ochre: #e8b94a;
+  --brand-mint:  #a4d4c5;
+  --brand-coral: #ff6b5a;
+
+  /* Radius */
+  --r-xs:   6px;
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-pill: 9999px;
+
+  /* Typography */
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Legacy aliases so existing JS-generated class names still resolve */
+  --bg:        var(--canvas);
+  --bg-2:      var(--surface-soft);
+  --paper:     var(--canvas);
+  --rule:      var(--hairline);
+  --rule-soft: var(--hairline-soft);
+  --accent:    var(--brand-coral);
+  --accent-2:  var(--brand-ochre);
+  --leaf:      var(--brand-mint);
+  --water:     var(--brand-teal);
+  --warn:      var(--brand-ochre);
+  --serif:     var(--sans);
+  --mono:      var(--sans);
+  --ink-2:     var(--body);
+  --shadow: 0 1px 3px rgba(10,10,10,.05), 0 8px 24px -8px rgba(10,10,10,.10);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--canvas);color:var(--ink);
+  font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+a{color:inherit;}
+#root{position:relative;}
+
+/* ---------- Layout ---------- */
+.shell{max-width:1280px;margin:0 auto;padding:32px 28px 120px;}
+
+/* ---------- Masthead ---------- */
+.mast{border-bottom:1px solid var(--hairline);padding:40px 0 44px;margin-bottom:36px;}
+.mast-row{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+.mast-meta{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.mast-title{font-weight:500;font-size:clamp(40px,5.5vw,68px);letter-spacing:-2px;line-height:1;margin:0 0 14px;font-style:normal;}
+.mast-title em{font-style:normal;color:var(--brand-coral);}
+.mast-sub{font-size:17px;color:var(--body);max-width:600px;line-height:1.55;}
+.mast-flights{display:flex;gap:24px;flex-wrap:wrap;font-size:13px;font-weight:500;border-top:1px solid var(--hairline);margin-top:24px;padding-top:16px;color:var(--muted);}
+.mast-flights b{font-size:14px;font-weight:600;color:var(--ink);}
+.mast-flights .ar{color:var(--brand-coral);}
+
+/* Lock button */
+.lock-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:600;
+  background:var(--ink);color:#fff;border:none;cursor:pointer;
+  padding:10px 18px;border-radius:var(--r-md);
+  transition:opacity .15s;white-space:nowrap;align-self:flex-start;margin-top:4px;
+}
+.lock-btn:hover{opacity:.85;}
+.lock-btn.is-locked{background:var(--brand-coral);}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;gap:4px;background:var(--surface-card);border-radius:var(--r-pill);padding:4px;margin-bottom:36px;width:fit-content;}
+.tab{background:transparent;border:0;cursor:pointer;font-size:14px;font-weight:500;padding:8px 18px;color:var(--muted);border-radius:var(--r-pill);transition:color .15s,background .15s;white-space:nowrap;}
+.tab:hover{color:var(--ink);}
+.tab.is-active{background:var(--canvas);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(10,10,10,.08);}
+
+/* ---------- Day rail ---------- */
+.rail{display:grid;grid-template-columns:repeat(13,1fr);gap:8px;margin-bottom:36px;}
+.rail-item{background:var(--canvas);border:1px solid var(--hairline);padding:12px 10px 14px;cursor:pointer;text-align:left;transition:transform .15s,border-color .15s,background .15s;border-radius:var(--r-lg);position:relative;}
+.rail-item:hover{border-color:var(--ink);transform:translateY(-1px);}
+.rail-item.is-active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.rail-item.is-active .rail-num,.rail-item.is-active .rail-city{color:rgba(255,255,255,.55);}
+.rail-item.is-active .rail-date{color:#fff;}
+.rail-item.is-active .rail-mo{color:rgba(255,255,255,.45);}
+.rail-num{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted-soft);display:block;margin-bottom:6px;}
+.rail-date{font-size:20px;font-weight:500;letter-spacing:-0.5px;line-height:1;display:block;}
+.rail-mo{font-size:10px;font-weight:500;letter-spacing:.08em;color:var(--muted);display:block;}
+.rail-city{font-size:11px;font-weight:600;display:block;margin-top:8px;color:var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rail-item.has-move::after{content:"";position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:var(--brand-coral);}
+@media(max-width:900px){.rail{grid-template-columns:repeat(7,1fr);}}
+@media(max-width:600px){.rail{grid-template-columns:repeat(4,1fr);}}
+
+/* ---------- Day header ---------- */
+.day-head{padding-bottom:24px;margin-bottom:32px;border-bottom:1px solid var(--hairline);}
+.day-eyebrow{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand-coral);margin-bottom:10px;}
+.day-title{font-weight:500;font-size:clamp(32px,4vw,48px);letter-spacing:-1px;line-height:1.1;margin:0;}
+.day-title em{font-style:normal;color:var(--muted);}
+.day-blurb{font-size:16px;line-height:1.6;color:var(--body);max-width:680px;margin:14px 0 0;}
+
+/* ---------- Layout split ---------- */
+.day-grid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start;}
+@media(max-width:960px){.day-grid{grid-template-columns:1fr;}}
+
+/* ---------- Timeline ---------- */
+.timeline{position:relative;}
+.timeline::before{content:"";position:absolute;left:17px;top:36px;bottom:36px;width:1px;background:var(--hairline);}
+
+/* ---------- Stop ---------- */
+.stop{display:grid;grid-template-columns:36px 1fr;gap:14px;position:relative;margin-bottom:4px;}
+.stop-marker{width:36px;height:36px;border-radius:50%;background:var(--canvas);border:1.5px solid var(--hairline);display:flex;align-items:center;justify-content:center;font-size:14px;z-index:1;margin-top:12px;}
+.stop.is-hotel .stop-marker{background:var(--brand-ochre);color:var(--ink);border-color:var(--brand-ochre);}
+.stop.is-train .stop-marker{background:var(--brand-coral);color:#fff;border-color:var(--brand-coral);}
+.stop.is-city  .stop-marker{background:var(--brand-lav);color:var(--ink);border-color:var(--brand-lav);}
+.stop.is-pass  .stop-marker{background:var(--brand-mint);color:var(--ink);border-color:var(--brand-mint);}
+.stop.is-flight .stop-marker{background:var(--brand-teal);color:#fff;border-color:var(--brand-teal);}
+
+.stop-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);overflow:hidden;transition:border-color .15s;display:grid;grid-template-columns:140px 1fr;}
+.stop-card:hover{border-color:var(--ink);}
+.stop.is-train .stop-card,.stop.is-pass .stop-card,.stop.is-flight .stop-card{border-color:var(--hairline);}
+
+.stop-photo{background:var(--surface-soft);position:relative;min-height:110px;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--hairline);}
+.stop-photo-glyph{position:absolute;top:8px;right:10px;font-size:20px;opacity:.3;}
+.stop-photo-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-soft);text-align:center;padding:8px;line-height:1.3;}
+.stop-photo.has-emoji{font-size:36px;background:var(--surface-card);}
+.stop-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+
+.stop-body{padding:16px 20px 18px;}
+.stop-kicker{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand-coral);margin-bottom:4px;}
+.stop-name{font-size:18px;font-weight:600;letter-spacing:-0.3px;line-height:1.2;margin:0 0 6px;}
+.stop-note{font-size:13px;color:var(--body);line-height:1.55;margin:0 0 8px;}
+.stop-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;letter-spacing:.3px;padding:3px 10px;border:1px solid var(--hairline);border-radius:var(--r-pill);background:var(--surface-card);color:var(--body);white-space:nowrap;}
+.chip.is-ticket{background:#fff0f5;border-color:var(--brand-pink);color:var(--brand-pink);}
+.chip.is-time{background:var(--ink);color:#fff;border-color:var(--ink);}
+.chip.is-pass{background:#e8f5f1;border-color:var(--brand-mint);color:#1a5a4a;}
+.chip.is-free{background:#e8f5f1;border-color:var(--brand-mint);color:#1a5a4a;}
+.chip.is-tip{background:#fdf5dc;border-color:var(--brand-ochre);color:#7a5a00;}
+
+/* ---------- Transit segment ---------- */
+.transit{display:grid;grid-template-columns:36px 1fr;gap:14px;margin:0;}
+.transit-marker{display:flex;justify-content:center;padding-top:6px;}
+.transit-dots{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.transit-dot{width:4px;height:4px;border-radius:50%;background:var(--hairline);}
+.transit-body{padding:5px 0 5px 4px;font-size:12px;font-weight:500;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.transit-body .t-icon{font-size:13px;}
+.transit-body .t-dur{color:var(--body);font-weight:600;}
+.transit-body .t-sep{opacity:.3;}
+.transit-body .t-cost{color:var(--brand-coral);font-weight:600;}
+
+/* Editable transit */
+.transit-edit-wrap{padding:5px 0 5px 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.transit-edit-wrap .t-icon-edit{font-size:16px;cursor:default;}
+.te-input{font-size:12px;font-weight:500;background:transparent;border:0;border-bottom:1px dashed var(--hairline);color:var(--body);padding:2px 4px;min-width:60px;max-width:120px;outline:none;transition:border-color .15s;}
+.te-input:focus{border-bottom-color:var(--ink);color:var(--ink);}
+.te-input::placeholder{color:var(--hairline-soft);}
+.te-sep{font-size:12px;color:var(--hairline);}
+.te-label{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted-soft);margin-top:1px;}
+.te-field{display:flex;flex-direction:column;align-items:flex-start;}
+
+/* Mode icon picker */
+.te-icon-btn{font-size:14px;background:none;border:1px dashed var(--hairline);border-radius:var(--r-sm);padding:2px 6px;cursor:pointer;transition:border-color .15s;}
+.te-icon-btn:hover{border-color:var(--muted);}
+.icon-picker-wrap{position:relative;display:inline-block;}
+.icon-picker-dropdown{
+  display:none;position:absolute;top:calc(100%+6px);left:0;
+  background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-md);
+  box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:200;padding:8px;
+  flex-wrap:wrap;gap:4px;width:168px;
+}
+.icon-picker-dropdown.open{display:flex;}
+.ip-opt{font-size:16px;cursor:pointer;padding:4px 6px;border-radius:var(--r-sm);border:1px solid transparent;}
+.ip-opt:hover{border-color:var(--hairline);background:var(--surface-soft);}
+
+/* ---------- Train segment (intercity) ---------- */
+.train-seg{margin:16px 0;background:var(--brand-teal);color:#fff;border-radius:var(--r-xl);padding:20px 24px;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;}
+.train-tag{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--brand-coral);color:#fff;padding:4px 10px;border-radius:var(--r-pill);white-space:nowrap;}
+.train-route{font-family:var(--sans);font-size:18px;font-weight:600;letter-spacing:-.02em;overflow-wrap:break-word;min-width:0;}
+.train-route .arr{color:var(--brand-peach);padding:0 8px;}
+.train-time{font-family:var(--sans);font-size:12px;color:rgba(255,255,255,.65);text-align:right;}
+.train-time b{color:#fff;display:block;font-weight:600;}
+@media(max-width:960px){.train-seg{grid-template-columns:1fr;gap:10px;}.train-time{text-align:left;}}
+
+/* ---------- Pass activation ---------- */
+.pass-seg{margin:16px 0;background:var(--brand-mint);color:var(--ink);border-radius:var(--r-xl);padding:18px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.pass-tag{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:rgba(10,10,10,.12);color:var(--ink);padding:4px 10px;border-radius:var(--r-pill);white-space:nowrap;}
+.pass-name{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:-.01em;}
+.pass-note{font-family:var(--sans);font-size:11px;color:rgba(10,10,10,.55);margin-top:2px;}
+.pass-chips{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto;}
+.pass-chip{font-family:var(--sans);font-size:10px;font-weight:500;background:rgba(10,10,10,.08);border:1px solid rgba(10,10,10,.15);padding:3px 10px;border-radius:var(--r-pill);white-space:nowrap;}
+
+/* ---------- Sidebar ---------- */
+.side{position:sticky;top:24px;}
+.side-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:18px 20px 20px;margin-bottom:18px;}
+.side-title{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--hairline);}
+.h-name{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:-.02em;margin:0 0 2px;}
+.h-addr{font-size:12px;color:var(--muted);margin:0 0 8px;}
+.h-dates{font-family:var(--sans);font-size:11px;color:var(--body);display:flex;justify-content:space-between;padding-top:8px;border-top:1px dashed var(--hairline);}
+.h-dates b{color:var(--brand-coral);}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.side-list{display:flex;flex-direction:column;gap:12px;}
+.side-row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:13px;}
+.side-row b{font-family:var(--sans);font-size:16px;font-weight:600;letter-spacing:-.01em;}
+.side-row span{font-family:var(--sans);font-size:11px;color:var(--muted);}
+.side-row .cost{font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap;}
+
+/* ---------- Tentative banner ---------- */
+.tentative{background:rgba(232,185,74,.12);border:1px dashed var(--brand-ochre);border-radius:var(--r-md);padding:12px 16px;margin-bottom:18px;display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--body);}
+.tentative b{color:var(--brand-ochre);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+
+/* ---------- Overview tab ---------- */
+.ov-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:760px){.ov-grid{grid-template-columns:1fr;}}
+.ov-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:20px 22px 22px;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;display:grid;grid-template-columns:auto 1fr;gap:16px;}
+.ov-card:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06);}
+.ov-num{font-family:var(--sans);font-size:36px;font-weight:700;color:var(--brand-coral);line-height:1;padding-top:4px;letter-spacing:-.04em;}
+.ov-date{font-family:var(--sans);font-size:11px;color:var(--muted);letter-spacing:.06em;}
+.ov-h{font-family:var(--sans);font-size:22px;font-weight:700;letter-spacing:-.03em;margin:4px 0 6px;line-height:1.15;}
+.ov-cities{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
+.ov-pill{font-family:var(--sans);font-size:10px;font-weight:500;background:var(--surface-soft);border:1px solid var(--hairline);padding:2px 9px;border-radius:var(--r-pill);letter-spacing:.02em;}
+.ov-summary{font-size:13px;color:var(--body);line-height:1.5;}
+
+/* ---------- Hotels tab ---------- */
+.hotels-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:700px){.hotels-grid{grid-template-columns:1fr;}}
+.hotel-full{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:22px 24px;}
+
+/* ---------- Costs tab ---------- */
+.costs-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:32px;}
+@media(max-width:900px){.costs-wrap{grid-template-columns:1fr;}}
+.cost-block{margin-bottom:32px;}
+.cost-block h3{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--hairline);}
+.cost-row{display:grid;grid-template-columns:1fr auto;padding:10px 0;border-bottom:1px dashed var(--hairline);align-items:baseline;gap:10px;}
+.cost-row:last-child{border-bottom:0;}
+.cost-row .nm{font-family:var(--sans);font-size:16px;font-weight:600;letter-spacing:-.01em;}
+.cost-row .sub{font-family:var(--sans);font-size:10px;color:var(--muted);display:block;margin-top:2px;}
+.cost-row .amt{font-family:var(--sans);font-size:12px;font-weight:500;}
+.cost-total{margin-top:14px;padding:16px 20px;background:var(--surface-dark);color:#fff;border-radius:var(--r-lg);display:flex;justify-content:space-between;align-items:baseline;}
+.cost-total b{font-family:var(--sans);font-size:22px;font-weight:700;letter-spacing:-.03em;}
+.cost-total span{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.08em;opacity:.6;}
+
+/* ---------- Legend ---------- */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.04em;color:var(--muted);margin-bottom:16px;}
+.legend-dot{display:inline-flex;align-items:center;gap:6px;}
+.legend-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;}
+.legend-dot.hotel{color:var(--brand-ochre);}
+.legend-dot.train{color:var(--brand-teal);}
+.legend-dot.city {color:var(--brand-lav);}
+.legend-dot.spot {color:var(--muted-soft);}
+
+/* ---------- Footer ---------- */
+.foot{margin-top:60px;padding-top:18px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
+
+/* ---------- Image zoom lightbox ---------- */
+.img-zoom-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,26,26,.88);
+  backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;
+  cursor:zoom-out;
+}
+.img-zoom-overlay.open{display:flex;}
+.img-zoom-img{
+  max-width:90vw;max-height:88vh;object-fit:contain;
+  border-radius:var(--r-md);box-shadow:0 24px 80px rgba(0,0,0,.5);
+  cursor:default;
+  animation:zoom-in .2s ease;
+}
+@keyframes zoom-in{from{opacity:0;transform:scale(.93);}to{opacity:1;transform:scale(1);}}
+.img-zoom-close{
+  position:fixed;top:20px;right:24px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  color:#fff;font-size:22px;line-height:1;width:40px;height:40px;
+  border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s;z-index:1;
+}
+.img-zoom-close:hover{background:rgba(255,255,255,.3);}
+.stop-photo img[data-zoom]{cursor:zoom-in;}
+
+/* ---------- Lock modal ---------- */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,26,26,.45);
+  backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-xl);
+  padding:36px 40px;max-width:360px;width:90%;
+  box-shadow:0 24px 64px rgba(0,0,0,.12);
+}
+.modal-title{font-family:var(--sans);font-size:26px;font-weight:700;letter-spacing:-.04em;margin:0 0 6px;}
+.modal-sub{font-family:var(--sans);font-size:12px;color:var(--muted);margin-bottom:24px;}
+.modal-input{
+  width:100%;font-family:var(--sans);font-size:20px;font-weight:600;letter-spacing:.2em;text-align:center;
+  background:var(--surface-soft);border:1.5px solid var(--hairline);border-radius:var(--r-md);
+  padding:12px;outline:none;color:var(--ink);margin-bottom:10px;
+  transition:border-color .15s;box-sizing:border-box;
+}
+.modal-input:focus{border-color:var(--ink);}
+.modal-input.shake{animation:shake .3s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}
+}
+.modal-err{font-family:var(--sans);font-size:11px;color:var(--brand-coral);min-height:16px;margin-bottom:12px;}
+.modal-btn{
+  width:100%;font-family:var(--sans);font-size:14px;font-weight:600;
+  background:var(--ink);color:#fff;border:0;border-radius:var(--r-md);
+  padding:13px;cursor:pointer;transition:opacity .15s;
+}
+.modal-btn:hover{opacity:.82;}
+.modal-cancel{background:none;border:0;font-family:var(--sans);font-size:12px;color:var(--muted);cursor:pointer;margin-top:10px;width:100%;padding:4px;}
+.modal-cancel:hover{color:var(--ink);}
+
+/* ---------- Edit notice ---------- */
+.edit-notice{
+  background:rgba(164,212,197,.15);border:1px dashed var(--brand-mint);border-radius:var(--r-md);
+  padding:10px 16px;margin-bottom:20px;
+  font-family:var(--sans);font-size:11px;font-weight:500;color:var(--brand-teal);
+  display:flex;align-items:center;gap:10px;
+}
+
+/* ---------- Visit cost row (on each spot card) ---------- */
+.vc-row{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--hairline-soft);}
+.vc-lbl{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-soft);white-space:nowrap;flex-shrink:0;}
+.vc-val{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--body);}
+.vc-free{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--brand-mint);}
+.vc-input{font-family:var(--sans);font-size:11px;background:transparent;border:0;border-bottom:1px dashed var(--hairline);color:var(--body);padding:2px 4px;min-width:80px;max-width:120px;outline:none;transition:border-color .15s;}
+.vc-input:focus{border-bottom-color:var(--brand-coral);color:var(--ink);}
+.vc-input::placeholder{color:var(--hairline);}
+
+/* ---------- Day cost estimate card ---------- */
+.est-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;}
+.est-head{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:10px 16px 8px;border-bottom:1px solid var(--hairline);}
+.est-section{padding:8px 16px 6px;}
+.est-slbl{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.est-row{display:flex;justify-content:space-between;gap:8px;padding:2px 0;}
+.er-name{color:var(--body);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;}
+.er-amt{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--ink);white-space:nowrap;flex-shrink:0;}
+.er-free{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--brand-mint);white-space:nowrap;flex-shrink:0;}
+.er-pass{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--brand-mint);opacity:.8;white-space:nowrap;flex-shrink:0;}
+.est-sub{display:flex;justify-content:space-between;padding:6px 16px;background:var(--surface-soft);border-top:1px dashed var(--hairline-soft);font-family:var(--sans);font-size:10px;font-weight:500;}
+.es-lbl{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.es-amt{color:var(--body);}
+.est-total{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--surface-dark);color:#fff;}
+.et-lbl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.6;}
+.et-amt{font-family:var(--sans);font-size:20px;font-weight:700;letter-spacing:-.03em;}
+
+/* ---------- Simplified Chinese translations ---------- */
+.zh-name{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:3px;letter-spacing:.02em;}
+.zh-note{display:block;font-size:11px;color:var(--muted-soft);margin-top:5px;line-height:1.65;}
+
+/* ===== Mobile ===== */
+@media(max-width:700px){
+  .shell{padding:20px 16px 80px;}
+  /* Tabs: pill container scrolls horizontally */
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;padding:4px;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{padding:9px 14px;white-space:nowrap;flex-shrink:0;}
+  /* Sidebar: remove sticky so it flows naturally below timeline */
+  .side{position:static;}
+  /* Footer: stack */
+  .foot{flex-direction:column;gap:4px;}
+  /* Masthead: tighten up */
+  .mast-flights{gap:12px;}
+  .lock-btn{font-size:10px;padding:7px 10px;}
+}
+@media(max-width:480px){
+  .shell{padding:16px 12px 60px;}
+  /* Stop card: stack photo above body instead of side-by-side */
+  .stop-card{grid-template-columns:1fr;}
+  .stop-photo{min-height:130px;border-right:0;border-bottom:1px solid var(--hairline);}
+  /* Rail: tighten items */
+  .rail-item{padding:8px 5px 9px;}
+  .rail-date{font-size:16px;}
+  /* Editable transit: allow wrap */
+  .transit-edit-wrap{gap:6px;}
+  .te-input{min-width:50px;}
+  /* Day cost card */
+  .est-total{padding:10px 14px;}
+  .et-amt{font-size:17px;}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Lock / Unlock modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h2 class="modal-title">Unlock</h2>
+    <p class="modal-sub">Enter password to enable editing</p>
+    <input class="modal-input" id="modal-pw" type="password" maxlength="20" placeholder="••••••" autocomplete="off" />
+    <div class="modal-err" id="modal-err"></div>
+    <button class="modal-btn" id="modal-submit">Unlock</button>
+    <button class="modal-cancel" id="modal-cancel">Cancel</button>
+  </div>
+</div>
+
+<!-- Image zoom lightbox -->
+<div class="img-zoom-overlay" id="img-zoom-overlay">
+  <button class="img-zoom-close" id="img-zoom-close" aria-label="Close">&#x2715;</button>
+  <img class="img-zoom-img" id="img-zoom-img" src="" alt="" />
+</div>
+
+<script src="itinerary.js"></script>
+<script>
+/* ================================================================
+   APP — rendering engine only. All trip data lives in itinerary.js
+================================================================ */
+
+// Data is loaded from itinerary.js (see <script src="itinerary.js"> above)
+
+
+
+/* ================================================================
+   STATE & STORAGE
+================================================================ */
+const LS_LOCK       = 'eu26_locked';
+const LS_TRANSIT    = 'eu26_transits';
+const LS_VISITCOSTS = 'eu26_visitcosts';
+const zhCache = (typeof ZH_TRANSLATIONS !== 'undefined') ? ZH_TRANSLATIONS : {};
+
+let state = { tab:'days', dayIdx:0 };
+
+function getLocked() { return localStorage.getItem(LS_LOCK) !== 'false'; }
+function setLocked(v){ localStorage.setItem(LS_LOCK, v ? 'true' : 'false'); }
+
+function getTransitEdits() {
+  try { return JSON.parse(localStorage.getItem(LS_TRANSIT) || '{}'); } catch(e){ return {}; }
+}
+function saveTransitEdit(key, data) {
+  const all = getTransitEdits();
+  all[key] = data;
+  localStorage.setItem(LS_TRANSIT, JSON.stringify(all));
+}
+function getTransitEdit(dayN, idx) {
+  return getTransitEdits()[`d${dayN}_i${idx}`] || null;
+}
+
+function getVisitCostEdits(){ try{ return JSON.parse(localStorage.getItem(LS_VISITCOSTS)||'{}'); }catch(e){ return {}; } }
+function getVisitCostEdit(dayN, idx){
+  const k = `d${dayN}_i${idx}`;
+  const all = getVisitCostEdits();
+  return all.hasOwnProperty(k) ? all[k] : null;
+}
+
+/* ================================================================
+   HELPERS
+================================================================ */
+function h(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function hotelForDay(n){ const id=HOTEL_MAP[n]; return id?HOTELS.find(x=>x.id===id):null; }
+function swissPassDay(n){ return n>=7&&n<=12; }
+
+// Cost parsing helpers
+function isPassCovered(s){ return !!s && /swiss pass|pass ✓|🇨🇭 swiss/i.test(String(s)); }
+function isFreeStr(s){ if(!s) return false; const t=String(s).trim(); return /^free/i.test(t)||t==='0'; }
+function dayCurrency(n){ return n>=7?'CHF':'€'; }
+function parseCostNum(s){
+  if(!s) return null;
+  const t = String(s).trim();
+  if(/^free$/i.test(t)||t==='0') return 0;
+  if(isPassCovered(t)) return null;
+  // Strip symbols, take first number (handles ranges like "60–90" → 60)
+  const clean = t.replace(/[€CHFchfMYRmyr~≈\s,()\[\]a-zA-Z✓]/g,'');
+  const m = clean.match(/(\d+(?:\.\d+)?)/);
+  return m ? parseFloat(m[1]) : null;
+}
+// Derive a visit cost string from existing chips data if not explicitly set
+function getVisitCostFromChips(chips){
+  if(!chips||!chips.length) return '';
+  const tc = chips.find(c=>c.k==='ticket');
+  if(tc) return tc.t;
+  const fc = chips.find(c=>c.k==='free'||c.k==='pass');
+  if(fc) return fc.t;
+  return '';
+}
+
+/* ================================================================
+   RENDER: Daily cost estimate card
+================================================================ */
+function renderDailyCostCard(day){
+  const sym = dayCurrency(day.n);
+  const visitEdits = getVisitCostEdits();
+  const transport = [];
+  const visits = [];
+
+  day.items.forEach((item, idx) => {
+    if(item.kind === 'transit'){
+      const edit = getTransitEdit(day.n, idx);
+      const cost = (edit && edit.cost !== undefined) ? edit.cost : (item.cost || '');
+      if(cost){
+        const pass = isPassCovered(cost);
+        transport.push({ name: item.mode || 'Transfer', cost, num: pass ? 0 : parseCostNum(cost), pass });
+      }
+    } else if(item.kind === 'train'){
+      if(item.cost){
+        const pass = isPassCovered(item.cost);
+        const from = (item.from||'').split(' ')[0];
+        const to   = (item.to||'').split(' ')[0];
+        transport.push({ name:`${from} → ${to}`, cost:item.cost, num: pass ? 0 : parseCostNum(item.cost), pass });
+      }
+    } else if(item.kind === 'spot'){
+      const key = `d${day.n}_i${idx}`;
+      const hasEdit = visitEdits.hasOwnProperty(key);
+      const vc = hasEdit ? visitEdits[key] : (item.visitCostStr || getVisitCostFromChips(item.chips));
+      if(vc !== ''){
+        visits.push({ name: item.name, cost: vc, num: parseCostNum(vc), free: isFreeStr(vc) });
+      }
+    }
+  });
+
+  // Subtotals — only sum numeric, non-pass, non-free entries
+  const tNums = transport.filter(t=>!t.pass && t.num !== null && t.num > 0).map(t=>t.num);
+  const vNums = visits.filter(v=>!v.free && v.num !== null && v.num > 0).map(v=>v.num);
+  const tSum  = tNums.length ? tNums.reduce((a,b)=>a+b,0) : null;
+  const vSum  = vNums.length ? vNums.reduce((a,b)=>a+b,0) : null;
+  const total = (tSum !== null || vSum !== null) ? (tSum||0)+(vSum||0) : null;
+
+  function tRow(t){
+    const amt = t.pass
+      ? `<span class="er-pass">Pass ✓</span>`
+      : `<span class="er-amt">${h(t.cost)}</span>`;
+    return `<div class="est-row"><span class="er-name">${h(t.name)}</span>${amt}</div>`;
+  }
+  function vRow(v){
+    const amt = v.free
+      ? `<span class="er-free">Free</span>`
+      : `<span class="er-amt">${h(v.cost)}</span>`;
+    return `<div class="est-row"><span class="er-name">${h(v.name)}</span>${amt}</div>`;
+  }
+
+  const tRows = transport.length
+    ? transport.map(tRow).join('')
+    : `<div class="est-row"><span class="er-name" style="opacity:.4;font-size:11px">—</span></div>`;
+
+  const vRows = visits.length
+    ? visits.map(vRow).join('')
+    : `<div class="est-row"><span class="er-name" style="opacity:.4;font-size:11px">Unlock to add visit costs</span></div>`;
+
+  const tSubHtml = tSum !== null
+    ? `<div class="est-sub"><span class="es-lbl">Transport subtotal</span><span class="es-amt">~${sym} ${tSum.toFixed(0)}</span></div>` : '';
+  const vSubHtml = vSum !== null
+    ? `<div class="est-sub"><span class="es-lbl">Visits subtotal</span><span class="es-amt">~${sym} ${vSum.toFixed(0)}</span></div>` : '';
+
+  const totalHtml = total !== null
+    ? `<div class="est-total"><span class="et-lbl">Day Estimate</span><span class="et-amt">~${sym} ${total.toFixed(0)}</span></div>`
+    : `<div class="est-total"><span class="et-lbl">Day Estimate</span><span class="et-amt" style="font-family:var(--mono);font-size:14px">—</span></div>`;
+
+  return `<div class="est-card" id="est-card">
+    <div class="est-head">Day Cost Estimate</div>
+    <div class="est-section">
+      <div class="est-slbl">Transport</div>
+      ${tRows}
+    </div>
+    ${tSubHtml}
+    <div class="est-section" style="padding-top:10px">
+      <div class="est-slbl">Visits &amp; Tickets</div>
+      ${vRows}
+    </div>
+    ${vSubHtml}
+    ${totalHtml}
+  </div>`;
+}
+
+/* ================================================================
+   RENDER: Photo placeholder
+================================================================ */
+function renderPhoto(item){
+  if(item.emoji){
+    return `<div class="stop-photo has-emoji" aria-hidden="true">${h(item.emoji)}</div>`;
+  }
+  if(item.photoUrl){
+    return `<div class="stop-photo"><img src="${h(item.photoUrl)}" alt="${h(item.name||'')}" loading="lazy" data-zoom="${h(item.photoUrl)}" data-zoom-alt="${h(item.name||'')}" /></div>`;
+  }
+  return `<div class="stop-photo">
+    <span class="stop-photo-glyph">${h(item.glyph||'')}</span>
+    <span class="stop-photo-label">${h(item.photo||'photo')}</span>
+  </div>`;
+}
+
+/* ================================================================
+   RENDER: Chips
+================================================================ */
+function renderChips(chips){
+  if(!chips||!chips.length) return '';
+  return `<div class="stop-meta">${chips.map(c=>`<span class="chip is-${h(c.k||'')}">${h(c.t)}</span>`).join('')}</div>`;
+}
+
+/* ================================================================
+   RENDER: Transit segment (editable or locked)
+================================================================ */
+function renderTransit(item, dayN, idx, locked){
+  const edit = getTransitEdit(dayN, idx);
+  const icon = edit?.icon || item.icon || '🚶';
+  const dur  = edit?.dur  !== undefined ? edit.dur  : (item.dur  || '');
+  const cost = edit?.cost !== undefined ? edit.cost : (item.cost || '');
+  const mode = edit?.mode !== undefined ? edit.mode : (item.mode || '');
+
+  const key = `d${dayN}_i${idx}`;
+  const dots = `<div class="transit-marker"><div class="transit-dots"><div class="transit-dot"></div><div class="transit-dot"></div><div class="transit-dot"></div></div></div>`;
+
+  if(locked){
+    const parts = [];
+    if(icon) parts.push(`<span class="t-icon">${h(icon)}</span>`);
+    if(dur)  parts.push(`<span class="t-dur">${h(dur)}</span>`);
+    if(mode) parts.push(`<span class="t-sep">·</span><span>${h(mode)}</span>`);
+    if(cost) parts.push(`<span class="t-sep">·</span><span class="t-cost">${h(cost)}</span>`);
+    return `<div class="transit">${dots}<div class="transit-body">${parts.join('')}</div></div>`;
+  }
+
+  // Editable
+  const iconOpts = TRANSPORT_ICONS.map(ic=>`<span class="ip-opt" data-key="${h(key)}" data-field="icon" data-val="${h(ic)}">${ic}</span>`).join('');
+  return `<div class="transit">
+    ${dots}
+    <div class="transit-edit-wrap">
+      <div class="icon-picker-wrap">
+        <button class="te-icon-btn" id="ipbtn-${h(key)}" title="Change transport type">${h(icon)}</button>
+        <div class="icon-picker-dropdown" id="ipdrop-${h(key)}">${iconOpts}</div>
+      </div>
+      <div class="te-field">
+        <span class="te-label">duration</span>
+        <input class="te-input" placeholder="e.g. 10 min" value="${h(dur)}" data-key="${h(key)}" data-field="dur" />
+      </div>
+      <span class="te-sep">·</span>
+      <div class="te-field">
+        <span class="te-label">mode / via</span>
+        <input class="te-input" style="min-width:90px" placeholder="Walk / Bus…" value="${h(mode)}" data-key="${h(key)}" data-field="mode" />
+      </div>
+      <span class="te-sep">·</span>
+      <div class="te-field">
+        <span class="te-label">cost</span>
+        <input class="te-input" style="min-width:70px" placeholder="€0 / free" value="${h(cost)}" data-key="${h(key)}" data-field="cost" />
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ================================================================
+   RENDER: Train segment (intercity booked)
+================================================================ */
+function renderTrain(item){
+  const costColor = item.cost && item.cost.toLowerCase().includes('pass')
+    ? `color:rgba(79,107,58,.9);` : ``;
+  return `<div class="train-seg">
+    <div class="train-tag">Inter-city · ${h(item.op||'')}</div>
+    <div class="train-route">${h(item.from)} <span class="arr">→</span> ${h(item.to)}</div>
+    <div class="train-time">
+      <b>${h(item.depart)} → ${h(item.arrive)}</b>
+      <div>${h(item.date)} · <span style="${costColor}">${h(item.cost||'')}</span></div>
+      ${item.note?`<div style="font-size:10px;opacity:.6;margin-top:3px">${h(item.note)}</div>`:''}
+    </div>
+  </div>`;
+}
+
+/* ================================================================
+   RENDER: Pass activation
+================================================================ */
+function renderPass(item){
+  return `<div class="pass-seg">
+    <div>
+      <div class="pass-tag">Swiss Travel Pass</div>
+    </div>
+    <div style="flex:1">
+      <div class="pass-name">${h(item.name)}</div>
+      <div class="pass-note">${h(item.note)}</div>
+    </div>
+    <div class="pass-chips">${(item.chips||[]).map(c=>`<span class="pass-chip">${h(c.t)}</span>`).join('')}</div>
+  </div>`;
+}
+
+/* ================================================================
+   RENDER: Stop card (hotel / city / spot / flight)
+================================================================ */
+function renderStop(item, kindClass, marker, dayN, idx, locked){
+  const chips = renderChips(item.chips);
+
+  // Simplified Chinese translations (spots and city markers)
+  const isCN = t => t && /[一-鿿]/.test(t);
+  const showZH = item.kind === 'spot' || item.kind === 'city';
+  const nameCN = showZH ? (isCN(zhCache[item.name]) ? zhCache[item.name] : '') : '';
+  const noteCN = showZH && item.note ? (isCN(zhCache[item.note]) ? zhCache[item.note] : '') : '';
+
+  // Visit cost field — only for spot items
+  let visitCostHtml = '';
+  if(item.kind === 'spot'){
+    const key = `d${dayN}_i${idx}`;
+    const edit = getVisitCostEdit(dayN, idx);
+    const vc = edit !== null ? edit : (item.visitCostStr || getVisitCostFromChips(item.chips));
+    if(!locked){
+      visitCostHtml = `<div class="vc-row">
+        <span class="vc-lbl">Visit cost</span>
+        <input class="vc-input" placeholder="Free / €0" value="${h(vc)}" data-vckey="${h(key)}" />
+      </div>`;
+    } else {
+      visitCostHtml = `<div class="vc-row">
+        <span class="vc-lbl">Visit cost</span>
+        ${vc ? `<span class="${isFreeStr(vc)?'vc-free':'vc-val'}">${h(vc)}</span>` : `<span class="vc-val" style="opacity:.3">—</span>`}
+      </div>`;
+    }
+  }
+
+  return `<div class="stop ${h(kindClass)}">
+    <div class="stop-marker">${h(marker)}</div>
+    <div class="stop-card">
+      ${renderPhoto(item)}
+      <div class="stop-body">
+        ${item.kicker?`<div class="stop-kicker">${h(item.kicker)}</div>`:''}
+        <h3 class="stop-name">${h(item.name)}${nameCN?`<span class="zh-name">${h(nameCN)}</span>`:''}</h3>
+        ${item.note?`<p class="stop-note">${h(item.note)}${noteCN?`<span class="zh-note">${h(noteCN)}</span>`:''}</p>`:''}
+        ${item.time?`<div class="stop-meta"><span class="chip is-time">${h(item.time)}</span></div>`:''}
+        ${chips}
+        ${visitCostHtml}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ================================================================
+   RENDER: Timeline
+================================================================ */
+function renderTimeline(day, locked){
+  let html = '<div class="timeline">';
+  let tIdx = 0;
+
+  day.items.forEach((item, idx) => {
+    if(item.kind === 'transit'){
+      html += renderTransit(item, day.n, idx, locked);
+    } else if(item.kind === 'train'){
+      html += renderTrain(item);
+    } else if(item.kind === 'pass'){
+      html += renderPass(item);
+    } else if(item.kind === 'hotel'){
+      html += renderStop(item, 'stop is-hotel', '⌂', day.n, idx, locked);
+    } else if(item.kind === 'flight'){
+      html += renderStop(item, 'stop is-flight', '✈', day.n, idx, locked);
+    } else if(item.kind === 'city'){
+      html += renderStop(item, 'stop is-city', '●', day.n, idx, locked);
+    } else {
+      // spot
+      html += renderStop(item, 'stop', '○', day.n, idx, locked);
+    }
+  });
+
+  html += '</div>';
+  return html;
+}
+
+/* ================================================================
+   RENDER: Sidebar
+================================================================ */
+function renderSidebar(day){
+  const hotel = hotelForDay(day.n);
+  let html = '<div class="side">';
+
+  if(hotel){
+    html += `<div class="side-card hotel-card">
+      <div class="side-title">Tonight's Stay</div>
+      <p class="h-name">${h(hotel.name)}</p>
+      <p class="h-addr">${h(hotel.addr)}</p>
+      <div class="h-dates">
+        <span>${h(hotel.inDate)}</span>
+        <span>→</span>
+        <b>${h(hotel.outDate)}</b>
+      </div>
+      <div class="tag-row">
+        <span class="chip">${h(hotel.city)}</span>
+        <span class="chip">${hotel.nights} night${hotel.nights>1?'s':''}</span>
+      </div>
+    </div>`;
+  } else {
+    html += `<div class="side-card"><div class="side-title">Accommodation</div><p style="font-size:13px;color:var(--muted)">Check-out day — no stay tonight.</p></div>`;
+  }
+
+  if(swissPassDay(day.n)){
+    const passDay = day.n - 6;
+    html += `<div class="side-card">
+      <div class="side-title" style="color:var(--leaf)">🇨🇭 Swiss Travel Pass Active</div>
+      <p style="font-size:13px;color:var(--ink-2);line-height:1.5">Day <b>${passDay}</b> of 6 &nbsp;·&nbsp; 3–8 June</p>
+      <div class="tag-row" style="margin-top:10px">
+        <span class="chip is-pass">Trains ✓</span>
+        <span class="chip is-pass">Boats ✓</span>
+        <span class="chip is-pass">500+ museums</span>
+        <span class="chip is-pass">50% cable cars</span>
+      </div>
+    </div>`;
+  }
+
+  html += renderDailyCostCard(day);
+
+  html += '</div>';
+  return html;
+}
+
+/* ================================================================
+   RENDER: Day view
+================================================================ */
+function renderDayView(day, locked){
+  const dateParts = day.date.split(', ');
+  const eyebrow = dateParts[0] ? `Day ${day.n} · ${dateParts[0]}` : `Day ${day.n}`;
+  const dateStr  = dateParts[1] || day.date;
+
+  return `
+    ${day.tentative ? `<div class="tentative"><div><b>TBD</b><br>This day is still being planned. Ideas and suggestions welcome!</div></div>` : ''}
+    ${!locked ? `<div class="edit-notice">✏ Edit mode — fill in transport details below, then press Lock when done.</div>` : ''}
+    <div class="day-head">
+      <div class="day-eyebrow">${h(eyebrow)}</div>
+      <h2 class="day-title">${h(dateStr)} — <em>${h(day.title)}</em></h2>
+      <p class="day-blurb">${h(day.blurb)}</p>
+    </div>
+    <div class="day-grid">
+      <div>${renderTimeline(day, locked)}</div>
+      ${renderSidebar(day)}
+    </div>`;
+}
+
+/* ================================================================
+   RENDER: Day Rail
+================================================================ */
+function renderRail(current){
+  return DAYS.map((d,i)=>{
+    const parts = d.short.split(' ');
+    const num   = parts[1]||'';
+    const mo    = parts[0]||'';
+    const cls   = [
+      'rail-item',
+      i===current?'is-active':'',
+      d.isMove?'has-move':''
+    ].filter(Boolean).join(' ');
+    return `<button class="${cls}" data-idx="${i}">
+      <span class="rail-num">D${d.n}</span>
+      <span class="rail-date">${h(num)}</span>
+      <span class="rail-mo">${h(mo)}</span>
+      <span class="rail-city">${h(d.cities[0]||'')}</span>
+    </button>`;
+  }).join('');
+}
+
+/* ================================================================
+   RENDER: Overview tab
+================================================================ */
+function renderOverview(){
+  return `<div class="ov-grid">${DAYS.map((d,i)=>`
+    <div class="ov-card" data-ov="${i}">
+      <div class="ov-num">${d.n}</div>
+      <div>
+        <div class="ov-date">${h(d.date)}</div>
+        <h3 class="ov-h">${h(d.title)}</h3>
+        <div class="ov-cities">${d.cities.map(c=>`<span class="ov-pill">${h(c)}</span>`).join('')}</div>
+        <p class="ov-summary">${h(d.blurb.slice(0,100))}…</p>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+/* ================================================================
+   RENDER: Hotels tab
+================================================================ */
+function renderHotels(){
+  return `<div class="hotels-grid">${HOTELS.map(h_=>`
+    <div class="hotel-full side-card">
+      <div class="side-title">${h(h_.city)}</div>
+      <p class="h-name">${h(h_.name)}</p>
+      <p class="h-addr">${h(h_.addr)}</p>
+      <div class="h-dates">
+        <span>${h(h_.inDate)}</span>
+        <span>→</span>
+        <b>${h(h_.outDate)}</b>
+      </div>
+      <div class="tag-row">
+        <span class="chip">${h_.nights} night${h_.nights>1?'s':''}</span>
+        <span class="chip is-ticket">${h(h_.cost)}</span>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+/* ================================================================
+   RENDER: Costs tab
+================================================================ */
+function renderCosts(){
+  const totalHotels = 'MYR 23,186.37';
+  function block(title, rows){
+    return `<div class="cost-block">
+      <h3>${title}</h3>
+      ${rows.map(r=>`<div class="cost-row">
+        <div><span class="nm">${h(r.name)}</span><span class="sub">${h(r.sub)}</span></div>
+        <span class="amt">${h(r.amt)}</span>
+      </div>`).join('')}
+    </div>`;
+  }
+  return `<div class="costs-wrap">
+    <div>
+      ${block('Hotels & Accommodation', COSTS.hotels)}
+      <div class="cost-total"><span>HOTELS TOTAL</span><b>${totalHotels}</b></div>
+    </div>
+    <div>
+      ${block('Transport', COSTS.transport)}
+      ${block('Entry Tickets (est.)', COSTS.tickets)}
+    </div>
+  </div>`;
+}
+
+/* ================================================================
+   RENDER: Masthead
+================================================================ */
+function renderMast(locked){
+  const lockLabel = locked
+    ? `<span>🔒</span> Locked`
+    : `<span>🔓</span> Unlocked — click to lock`;
+  const lockCls = locked ? 'lock-btn is-locked' : 'lock-btn';
+  return `
+    <div class="mast-row">
+      <div>
+        <div class="mast-meta">Family Proposal · v1 · ${h(TRIP.dates)}</div>
+        <h1 class="mast-title">A 13-day journey through <em>Europe</em></h1>
+        <p class="mast-sub">${h(TRIP.subtitle)}. Six hotels, four train days, the Matterhorn, the Eiger.</p>
+      </div>
+      <button class="${lockCls}" id="lock-btn">${lockLabel}</button>
+    </div>
+    <div class="mast-flights">
+      <span class="ar"><b>↓ Arrive</b> &nbsp; ${h(TRIP.flightIn.airport)} · ${h(TRIP.flightIn.date)} · ${h(TRIP.flightIn.time)}</span>
+      <span><b>↑ Depart</b> &nbsp; ${h(TRIP.flightOut.airport)} · ${h(TRIP.flightOut.date)} · ${h(TRIP.flightOut.time)}</span>
+      <span><b>13 days</b> &nbsp; 6 hotels · 3 countries · multiple cities</span>
+    </div>`;
+}
+
+/* ================================================================
+   MAIN RENDER
+================================================================ */
+function renderAll(){
+  const locked = getLocked();
+  const day    = DAYS[state.dayIdx];
+
+  const tabContent = (() => {
+    if(state.tab==='days'){
+      return `
+        <div class="legend">
+          <span class="legend-dot hotel">Hotel / Flight</span>
+          <span class="legend-dot train">Inter-city train</span>
+          <span class="legend-dot city">City arrival</span>
+          <span class="legend-dot spot">Stop</span>
+        </div>
+        <div class="rail">${renderRail(state.dayIdx)}</div>
+        <div id="day-content">${renderDayView(day, locked)}</div>`;
+    }
+    if(state.tab==='overview') return renderOverview();
+    if(state.tab==='hotels')   return renderHotels();
+    if(state.tab==='costs')    return renderCosts();
+    return '';
+  })();
+
+  document.getElementById('root').innerHTML = `
+    <div class="shell">
+      <header class="mast">${renderMast(locked)}</header>
+      <nav class="tabs">
+        <button class="tab ${state.tab==='days'?'is-active':''}"     data-tab="days">Day-by-day</button>
+        <button class="tab ${state.tab==='overview'?'is-active':''}" data-tab="overview">Overview</button>
+        <button class="tab ${state.tab==='hotels'?'is-active':''}"   data-tab="hotels">Hotels</button>
+        <!-- <button class="tab ${state.tab==='costs'?'is-active':''}"    data-tab="costs">Costs</button> -->
+      </nav>
+      <div id="tab-content">${tabContent}</div>
+      <footer class="foot">
+        <span>Europe · May 28 – Jun 9, 2026</span>
+        <span>Made with ♡ for family</span>
+      </footer>
+    </div>`;
+
+  bindEvents();
+}
+
+/* ================================================================
+   EVENT BINDING
+================================================================ */
+function bindEvents(){
+  const root = document.getElementById('root');
+
+  // Tabs
+  root.querySelectorAll('.tab[data-tab]').forEach(btn=>{
+    btn.addEventListener('click',()=>{ state.tab=btn.dataset.tab; renderAll(); });
+  });
+
+  // Rail
+  root.querySelectorAll('.rail-item[data-idx]').forEach(btn=>{
+    btn.addEventListener('click',()=>{ state.dayIdx=parseInt(btn.dataset.idx); renderAll(); });
+  });
+
+  // Overview cards
+  root.querySelectorAll('.ov-card[data-ov]').forEach(card=>{
+    card.addEventListener('click',()=>{ state.dayIdx=parseInt(card.dataset.ov); state.tab='days'; renderAll(); });
+  });
+
+  // Lock button
+  const lockBtn = document.getElementById('lock-btn');
+  if(lockBtn) lockBtn.addEventListener('click',()=>{
+    if(!getLocked()){
+      setLocked(true); renderAll();
+    } else {
+      openModal();
+    }
+  });
+
+  // Transit inputs (save on change)
+  root.querySelectorAll('.te-input[data-key]').forEach(input=>{
+    input.addEventListener('input', e=>{
+      const { key, field } = e.target.dataset;
+      const all = getTransitEdits();
+      if(!all[key]) all[key] = {};
+      all[key][field] = e.target.value;
+      localStorage.setItem(LS_TRANSIT, JSON.stringify(all));
+    });
+  });
+
+  // Icon picker buttons
+  root.querySelectorAll('.te-icon-btn[id]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const drop = document.getElementById(btn.id.replace('ipbtn-','ipdrop-'));
+      if(drop) drop.classList.toggle('open');
+    });
+  });
+
+  // Icon picker options
+  root.querySelectorAll('.ip-opt[data-key]').forEach(opt=>{
+    opt.addEventListener('click', e=>{
+      e.stopPropagation();
+      const { key, val } = e.target.dataset;
+      const all = getTransitEdits();
+      if(!all[key]) all[key] = {};
+      all[key]['icon'] = val;
+      localStorage.setItem(LS_TRANSIT, JSON.stringify(all));
+      // Update button text in place
+      const btn = document.getElementById(`ipbtn-d${key.split('_')[0].slice(1)}_${key.split('_')[1]}`);
+      const parentDrop = e.target.closest('.icon-picker-dropdown');
+      if(parentDrop) parentDrop.classList.remove('open');
+      // Re-render day content only
+      const day = DAYS[state.dayIdx];
+      const locked = getLocked();
+      const dc = document.getElementById('day-content');
+      if(dc) dc.innerHTML = renderDayView(day, locked);
+      bindEvents();
+    });
+  });
+
+  // Visit cost inputs — save and refresh estimate card live
+  root.querySelectorAll('.vc-input[data-vckey]').forEach(input=>{
+    input.addEventListener('input', e=>{
+      const key = e.target.dataset.vckey;
+      const all = getVisitCostEdits();
+      all[key] = e.target.value;
+      localStorage.setItem(LS_VISITCOSTS, JSON.stringify(all));
+      // Patch only the estimate card so the input doesn't lose focus
+      const ec = document.getElementById('est-card');
+      if(ec) ec.outerHTML = renderDailyCostCard(DAYS[state.dayIdx]);
+    });
+  });
+
+  // Close icon pickers on outside click
+  document.addEventListener('click',()=>{
+    document.querySelectorAll('.icon-picker-dropdown.open').forEach(d=>d.classList.remove('open'));
+  }, {once:false});
+}
+
+/* ================================================================
+   LOCK MODAL
+================================================================ */
+function openModal(){
+  const overlay = document.getElementById('modal-overlay');
+  const pw      = document.getElementById('modal-pw');
+  const err     = document.getElementById('modal-err');
+  overlay.classList.add('open');
+  pw.value = '';
+  err.textContent = '';
+  pw.focus();
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+document.getElementById('modal-submit').addEventListener('click', ()=>{
+  const pw  = document.getElementById('modal-pw');
+  const err = document.getElementById('modal-err');
+  if(pw.value === '12345'){
+    setLocked(false);
+    closeModal();
+    renderAll();
+  } else {
+    err.textContent = 'Incorrect password.';
+    pw.classList.add('shake');
+    pw.value = '';
+    setTimeout(()=>pw.classList.remove('shake'), 400);
+  }
+});
+
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e=>{
+  if(e.target === e.currentTarget) closeModal();
+});
+document.getElementById('modal-pw').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') document.getElementById('modal-submit').click();
+});
+
+/* ================================================================
+   TRANSLATIONS: dev helper — run generateZHData() in console once,
+   then paste the output into itinerary.js as ZH_TRANSLATIONS.
+================================================================ */
+async function generateZHData(){
+  const texts = new Set();
+  DAYS.forEach(day => day.items.forEach(item => {
+    if(item.kind === 'spot' || item.kind === 'city'){
+      if(item.name) texts.add(item.name);
+      if(item.note) texts.add(item.note);
+    }
+  }));
+  const result = {};
+  let done = 0;
+  for(const text of texts){
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=${encodeURIComponent(text.slice(0,480))}`;
+      const d = await (await fetch(url)).json();
+      const t = Array.isArray(d[0]) ? d[0].map(c=>c[0]||'').join('') : '';
+      if(t && /[一-鿿]/.test(t)) result[text] = t;
+    } catch(e) {}
+    console.log(`[ZH] ${++done}/${texts.size}: ${text.slice(0,50)}`);
+  }
+  const out = 'const ZH_TRANSLATIONS = ' + JSON.stringify(result, null, 2) + ';';
+  console.log('\n=== Paste this into itinerary.js (replace the ZH_TRANSLATIONS line) ===\n');
+  console.log(out);
+  return result;
+}
+
+/* ================================================================
+   IMAGE ZOOM LIGHTBOX
+================================================================ */
+const imgZoomOverlay = document.getElementById('img-zoom-overlay');
+const imgZoomImg     = document.getElementById('img-zoom-img');
+
+function closeZoom(){
+  imgZoomOverlay.classList.remove('open');
+  imgZoomImg.src = '';
+}
+
+document.getElementById('root').addEventListener('click', e => {
+  const img = e.target.closest('img[data-zoom]');
+  if(!img) return;
+  imgZoomImg.src = img.dataset.zoom;
+  imgZoomImg.alt = img.dataset.zoomAlt || '';
+  imgZoomOverlay.classList.add('open');
+});
+
+document.getElementById('img-zoom-close').addEventListener('click', closeZoom);
+imgZoomOverlay.addEventListener('click', e => { if(e.target === imgZoomOverlay) closeZoom(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeZoom(); });
+
+/* ================================================================
+   INIT
+================================================================ */
+// Hash routing
+const m = location.hash.match(/day-(\d+)/);
+if(m){ const n=parseInt(m[1])-1; if(n>=0&&n<DAYS.length) state.dayIdx=n; }
+
+renderAll();
+</script>
+</body>
+</html>
