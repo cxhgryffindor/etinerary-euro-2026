@@ -1186,6 +1186,15 @@ const m = location.hash.match(/day-(\d+)/);
 if(m){ const n=parseInt(m[1])-1; if(n>=0&&n<DAYS.length) state.dayIdx=n; }
 
 renderAll();
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return;
+    refreshing = true;
+    location.reload();
+  });
+}
 </script>
 </body>
 </html>
