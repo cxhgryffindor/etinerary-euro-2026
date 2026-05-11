@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(Select-String -Path \"index.html\" -Pattern \"</body>|</head>|<script\")",
-      "Bash(Select-Object -First 10)",
-      "PowerShell(ffmpeg *)"
-    ]
-  }
-}
