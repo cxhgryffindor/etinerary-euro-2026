@@ -140,9 +140,9 @@ a{color:inherit;}
 .plan-tab-title{font-size:13px;font-weight:500;color:var(--body-str);line-height:1.35;}
 .plan-tab.is-active .plan-tab-title{color:rgba(255,255,255,.85);}
 @media(max-width:700px){
-  .plan-selector{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
-  .plan-selector::-webkit-scrollbar{display:none;}
-  .plan-tab{min-width:140px;flex-shrink:0;}
+  .plan-selector{flex-wrap:nowrap;gap:6px;}
+  .plan-tab{flex:1;min-width:0;padding:8px 10px;}
+  .plan-tab-title{font-size:12px;line-height:1.3;}
 }
 
 /* ---------- Layout split ---------- */
@@ -411,7 +411,7 @@ a{color:inherit;}
 
 /* ===== Mobile ===== */
 @media(max-width:700px){
-  .shell{padding:20px 16px 80px;}
+  .shell{padding:20px 16px 80px;overflow-x:hidden;}
   /* Tabs: pill container scrolls horizontally */
   .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;padding:4px;}
   .tabs::-webkit-scrollbar{display:none;}
@@ -425,9 +425,16 @@ a{color:inherit;}
   .lock-btn{font-size:10px;padding:7px 10px;}
   /* Stop card body: tighter padding when photo stacks above */
   .stop-body{padding:14px 16px 16px;}
-  /* Plan selector: already handled above (horizontal scroll) */
   /* Day head: tighten bottom margin */
   .day-head{margin-bottom:24px;}
+  /* Prevent stop + train items from overflowing the screen */
+  .stop{min-width:0;}
+  .stop-card{overflow:hidden;max-width:100%;}
+  .train-seg{padding:14px 16px;gap:12px;}
+  .pass-seg{padding:14px 16px;gap:10px;}
+  /* Transit edit wrap: allow wrapping on small screens */
+  .transit-edit-wrap{flex-wrap:wrap;gap:6px;}
+  .te-input{min-width:50px;}
 }
 @media(max-width:600px){
   /* Stop card: stack photo above body instead of side-by-side */
@@ -439,9 +446,6 @@ a{color:inherit;}
   /* Rail: tighten items */
   .rail-item{padding:8px 5px 9px;}
   .rail-date{font-size:16px;}
-  /* Editable transit: allow wrap */
-  .transit-edit-wrap{gap:6px;}
-  .te-input{min-width:50px;}
   /* Day cost card */
   .est-total{padding:10px 14px;}
   .et-amt{font-size:17px;}
