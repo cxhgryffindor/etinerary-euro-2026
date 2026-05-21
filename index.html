@@ -139,7 +139,11 @@ a{color:inherit;}
 .plan-tab.is-active .plan-tab-label{color:var(--brand-peach);}
 .plan-tab-title{font-size:13px;font-weight:500;color:var(--body-str);line-height:1.35;}
 .plan-tab.is-active .plan-tab-title{color:rgba(255,255,255,.85);}
-@media(max-width:600px){.plan-tab{min-width:0;width:100%;}}
+@media(max-width:700px){
+  .plan-selector{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
+  .plan-selector::-webkit-scrollbar{display:none;}
+  .plan-tab{min-width:140px;flex-shrink:0;}
+}
 
 /* ---------- Layout split ---------- */
 .day-grid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start;}
@@ -419,12 +423,19 @@ a{color:inherit;}
   /* Masthead: tighten up */
   .mast-flights{gap:12px;}
   .lock-btn{font-size:10px;padding:7px 10px;}
+  /* Stop card body: tighter padding when photo stacks above */
+  .stop-body{padding:14px 16px 16px;}
+  /* Plan selector: already handled above (horizontal scroll) */
+  /* Day head: tighten bottom margin */
+  .day-head{margin-bottom:24px;}
+}
+@media(max-width:600px){
+  /* Stop card: stack photo above body instead of side-by-side */
+  .stop-card{grid-template-columns:1fr;}
+  .stop-photo{min-height:140px;border-right:0;border-bottom:1px solid var(--hairline);}
 }
 @media(max-width:480px){
   .shell{padding:16px 12px 60px;}
-  /* Stop card: stack photo above body instead of side-by-side */
-  .stop-card{grid-template-columns:1fr;}
-  .stop-photo{min-height:130px;border-right:0;border-bottom:1px solid var(--hairline);}
   /* Rail: tighten items */
   .rail-item{padding:8px 5px 9px;}
   .rail-date{font-size:16px;}
