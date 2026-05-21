@@ -670,7 +670,7 @@ const DAYS = [
 // =========================================================
 // DAY 8 · Thu 4 Jun · ZERMATT — Gornergrat & Matterhorn  [Swiss Pass Day 2]
 // =========================================================
-{ n:8, date:"Thu, Jun 4", short:"Jun 4",
+{ n:8, date:"Thu, Jun 4", short:"Jun 4", isMove:true,
   title:"Zermatt — Gornergrat & the Matterhorn",
   cities:["Zermatt"], tentative:false,
   blurb:"The Matterhorn day. Cogwheel train up to Gornergrat at 3,089m (Europe's highest open-air cog railway). Sit RIGHT side going up. Visit the summit, then stop at Rotenboden for the famous Matterhorn mirror reflection at Riffelsee. ⚠️ Early June: hike DOWN from Rotenboden to Riffelberg may still have snow patches — turn back if conditions are poor. Easy senior fallback: just visit Riffelsee 2 min from Rotenboden station and train back.",
@@ -724,9 +724,9 @@ const DAYS = [
 // =========================================================
 // DAY 9 · Fri 5 Jun · Zermatt → Grindelwald  [Swiss Pass Day 3]
 // =========================================================
-{ n:9, date:"Fri, Jun 5", short:"Jun 5", isMove:true, tentative:false,
+{ n:9, date:"Fri, Jun 5", short:"Jun 5", isMove:true, 
   title:"Zermatt → Grindelwald + Pfingstegg afternoon",
-  cities:["Grindelwald"],
+  cities:["Grindelwald"],tentative:false,
   blurb:"Two arrival-day options based on toboggan status (opens mid-May–mid-June, weather/snow-dependent — check pfingstegg.ch the morning of). Plan A: toboggan OPEN — 725m alpine slide + Fly-Line zipline + Eiger views. Plan B: toboggan CLOSED — Fly-Line + scenic Bäregg trail viewpoint with glacier panorama. Both plans include the same Zermatt→Grindelwald rail journey (~3h 35m, all on Swiss Pass) with Spiez castle visible from the train window during the natural change.",
   plans:[
     {
@@ -874,7 +874,7 @@ const DAYS = [
 // =========================================================
 // DAY 10 · Sat 6 Jun · Grindelwald full day  [Swiss Pass Day 4]
 // =========================================================
-{ n:10, date:"Sat, Jun 6", short:"Jun 6",
+{ n:10, date:"Sat, Jun 6", short:"Jun 6", 
   title:"Grindelwald — Full Day",
   cities:["Grindelwald","Lauterbrunnen"], tentative:false,
   blurb:"Two full-day options: Grindelwald First gondola + Lauterbrunnen valley walk (Plan A), or the Männlichen gondola + Kleine Scheidegg ridge walk right under the Eiger North Face (Plan B).",
@@ -991,74 +991,60 @@ const DAYS = [
 // =========================================================
 // DAY 11 · Sun 7 Jun · GRINDELWALD → ZÜRICH  [Swiss Pass Day 5]
 // =========================================================
-{ n:11, date:"Sun, Jun 7", short:"Jun 7", isMove:true,
+{ n:11, date:"Sun, Jun 7", short:"Jun 7",
   title:"Grindelwald → Zürich",
   cities:["Zürich"], tentative:false,
   blurb:"Direct train Grindelwald → Zürich via Bern (~3h, fast route — best for senior). Drop bags at Mama Shelter, then a full afternoon Old Town walking loop: Swiss National Museum → Bahnhofstrasse → Lindenhof → St. Peter's → Fraumünster → Grossmünster → Niederdorf → Limmat river cruise. End at Lake Zürich for sunset. All trams + boat FREE on Swiss Pass.",
   items:[
-          { kind:"hotel",   name:"Check out — Spillstattstrasse 27", photoUrl:PHOTOS.grinhotel },
-          { kind:"transit", icon:"🚶", dur:"6 min", mode:"Walk down to Grindelwald Bahnhof. Final glance at the Eiger — say goodbye." },
-
-          // ============ GRINDELWALD → ZÜRICH (FAST ROUTE) ============
-          { kind:"transit", icon:"🚂", dur:"34 min", cost:"Swiss Pass", mode:"Grindelwald → Interlaken Ost (BOB regional train). Sit LEFT side — last views of the valley + Lake Brienz approach. Board the FRONT of the train; the rear half splits at Zweilütschinen heading to Lauterbrunnen." },
-          { kind:"transit", icon:"🚂", dur:"~50 min", cost:"Swiss Pass", mode:"Interlaken Ost → Bern (IC61, runs hourly). Passes Lake Thun shoreline first 20 min — sit RIGHT for lake views." },
-          { kind:"transit", icon:"🚂", dur:"~1 hr", cost:"Swiss Pass", mode:"Bern → Zürich HB (IC1, every 30 min). Functional leg — senior can nap." },
-          { kind:"city",    name:"Zürich HB arrival", note:"Switzerland's largest train station. Follow signs to 'Ausgang' (Exit) → tram stops are directly outside on Bahnhofplatz. ⚠️ Alternative SCENIC route: via Lucerne (Luzern-Interlaken Express through Brünig Pass + 5 lakes) takes ~3h 25m vs ~2h 30m here — choose based on senior's energy after 2 nights in Grindelwald.", glyph:G.train, photoUrl:PHOTOS.zurichhb },
-
-          // ============ HOTEL CHECK-IN ============
-          { kind:"transit", icon:"🚊", dur:"11 min", cost:"Swiss Pass", mode:"Tram from Bahnhofplatz/HB toward hotel (FREE on Swiss Pass — Zürich trams + buses all covered)." },
-          { kind:"hotel",   name:"Mama Shelter Zürich", note:"Drop bags & coffee. If room not ready, leave luggage at reception. Use the bathroom + change into comfortable walking shoes — the afternoon is a flat city loop (~5 km on cobblestones). ⚠️ Before leaving, BOOK Swiss Chuchi dinner for 19:00 if not done already (+41 44 266 96 96 or swiss-chuchi.ch).", photoUrl:PHOTOS.mama, chips:[{t:"Check-in",k:"time"},{t:"Reserve dinner now",k:"tip"}] },
-
-          // ============ AFTERNOON WALKING LOOP — START ============
-          { kind:"transit", icon:"🚊", dur:"~10 min", cost:"Swiss Pass", mode:"Tram back to Zürich HB / Bahnhofplatz. The walking loop starts at the station." },
-          { kind:"spot",    name:"Swiss National Museum (Landesmuseum)", note:"Switzerland's history in a fairytale castle building right next to the main station. Don't miss the inner courtyard (free, no ticket needed) — turreted facade. FREE entry with Swiss Pass. Allow 60–90 min if going inside; or just admire the architecture and skip the interior to save time for the walking loop.", glyph:G.museum, photoUrl:PHOTOS.swissmusuem,
-            chips:[{t:"FREE w/ pass",k:"pass"},{t:"60-90 min inside",k:"time"}] },
-          { kind:"transit", icon:"🚶", dur:"3 min", mode:"Cross the Bahnhofbrücke bridge — first view of the Limmat River" },
-          { kind:"spot",    name:"Bahnhofstrasse", note:"One of the world's most exclusive shopping streets — 1.4 km from the station to Lake Zürich. Watch Sprüngli (chocolate flagship, #21) and Confiserie Teuscher for window shopping. Senior tip: trams run the length of the street — hop on one stop if she tires.", glyph:G.market, photoUrl:PHOTOS.bahnhofstrasse,
-            chips:[{t:"Tram parallel",k:"tip"}] },
-          { kind:"transit", icon:"🚶", dur:"5 min", mode:"Cut left off Bahnhofstrasse at Rennweg, head toward the old town" },
-          { kind:"spot",    name:"Lindenhof", note:"Raised Roman-era hilltop square with linden trees — panoramic view over Zürich's old town and the Limmat. Site of a Roman castle, then a medieval fort. Lots of benches under the trees. Locals play giant chess in the back on weekends. FREE.", glyph:G.park, photoUrl:PHOTOS.lindenhof,
-            chips:[{t:"FREE",k:"free"},{t:"Photo spot",k:"tip"}] },
-          { kind:"transit", icon:"🚶", dur:"3 min", mode:"Walk DOWNHILL off Lindenhof to St. Peterhofstatt" },
-          { kind:"spot",    name:"St. Peter's Church", note:"The oldest parish church in Zürich, with the LARGEST CLOCK FACE IN EUROPE (8.7m diameter — bigger than Big Ben). Interior is free to enter, simple and peaceful. 5-min stop to look up at the clock from the square.", glyph:G.cathedral, photoUrl:PHOTOS.StPeterChurch,
-            chips:[{t:"FREE entry",k:"free"},{t:"Biggest clock in Europe",k:"tip"}] },
-          { kind:"transit", icon:"🚶", dur:"1 min" },
-          { kind:"spot",    name:"Augustinergasse", note:"One of Zürich's prettiest medieval lanes — narrow, cobbled, lined with guild houses and colourful painted oriel windows (Erker). Most-photographed street in the city. Best photo: stand at one end and shoot down the lane.", glyph:G.canal, photoUrl:PHOTOS.Augustinergasse,
-            chips:[{t:"Photo spot",k:"tip"}] },
-          { kind:"transit", icon:"🚶", dur:"3 min", mode:"Continue to the riverside Münsterhof square" },
-          { kind:"spot",    name:"Fraumünster", note:"Famous for Marc Chagall's stunning stained-glass windows (1970) — five vivid panels filling the Gothic choir with colour. Also has a Giacometti window in the transept. ⚠️ Entry is CHF 5 (NOT free on STP), but worth it — the windows are unique. No photos inside.", glyph:G.cathedral, photoUrl:PHOTOS.fraumunster,
-            chips:[{t:"CHF 5 entry",k:"ticket"},{t:"Chagall windows",k:"tip"}] },
-          { kind:"transit", icon:"🚶", dur:"3 min", mode:"Cross Münsterbrücke bridge to the east bank" },
-          { kind:"spot",    name:"Grossmünster", note:"Zürich's iconic twin-towered Romanesque cathedral — the city skyline icon. Built 12th century, where Huldrych Zwingli started the Swiss Reformation in 1520. Interior is FREE to enter (austere post-Reformation simplicity, plus modern Sigmar Polke stained-glass windows). Tower climb is CHF 5 — 187 steps for a panoramic Old Town view if energy allows.", glyph:G.cathedral, photoUrl:PHOTOS.Grossmünster,
-            chips:[{t:"Interior FREE",k:"free"},{t:"Tower CHF 5",k:"ticket"}] },
-          { kind:"transit", icon:"🚶", dur:"2 min" },
-          { kind:"spot",    name:"Niederdorf (Dörfli)", note:"Zürich's pedestrian-only medieval quarter — Niederdorfstrasse + side alleys lined with cafés, gelato shops, boutiques, street performers. The local heart of the Old Town. Coffee/cake stop: Café Schober (Napfgasse 4 — historic confectionery with painted ceilings, worth a peek inside even if not eating). Senior break point here. NOTE: Swiss Chuchi (dinner) is on Rosengasse just off Niederdorfstrasse — you're walking past it now, scout the location for later.", glyph:G.market, photoUrl:PHOTOS.Niederdorf,
-            chips:[{t:"Cafe stop",k:"tip"},{t:"Senior break",k:"tip"},{t:"Dinner is here",k:"tip"}] },
-          { kind:"transit", icon:"🚶", dur:"5 min", mode:"Wander south through Niederdorf, then cross Rathausbrücke back west" },
-          { kind:"spot",    name:"Rathaus (Town Hall) — exterior view", note:"Built 1694-1698, Renaissance style with Baroque touches. Looks like it's built directly INTO the Limmat River. Best photo angle: from Rathausbrücke bridge looking south. Not open for public visits — just admire from outside.", glyph:G.cathedral, photoUrl:PHOTOS.Rathaus,
-            chips:[{t:"Exterior only",k:"tip"}] },
-          { kind:"transit", icon:"🚶", dur:"10 min", mode:"Walk north along Limmatquai back toward the Landesmuseum dock (riverside path, flat)" },
-
-          // ============ LIMMAT RIVER CRUISE ============
-          { kind:"spot",    name:"Limmat River Cruise — Landesmuseum dock", note:"Board at 'Zürich Landesmuseum (See)' dock, just below the Swiss National Museum. New electric boats since 2023 — 'Fluvius', 'Navalis', 'Pontus' — glass roof, air-conditioned, partially wheelchair accessible. Confirmed running on Jun 7 (April-Oct season). One-way to Bürkliplatz = ~25 min. FREE with Swiss Pass. No reservation — just board. ⏰ Aim to catch a boat by ~17:30 so you're back in Niederdorf for the 19:00 dinner reservation.", glyph:G.ship, photoUrl:PHOTOS.limmat,
-            chips:[{t:"FREE w/ pass",k:"pass"},{t:"Glass roof",k:"tip"},{t:"~25 min one-way",k:"time"}] },
-          { kind:"transit", icon:"🚣", dur:"~25 min", cost:"Swiss Pass", mode:"Limmat boat: Landesmuseum → Limmatquai → Storchen → Bürkliplatz (disembark at the lake). You'll glide past everything you walked — Rathaus, Fraumünster, Grossmünster — from a new angle, then onto Lake Zürich. Choose outdoor deck at the back for best photos." },
-          { kind:"spot",    name:"Bürkliplatz / Lake Zürich", note:"Disembark at Bürkliplatz lakeside plaza. The Alps are visible behind the lake on clear days — golden-hour light at 18:00+ in June. Quick 15–20 min stop: walk a short stretch along the promenade, snap photos of the lake + swans, then turn back. ⚠️ Don't linger too long — you need to be back in Niederdorf for 19:00 dinner. Skip the Zürichhorn detour today (save it for tomorrow if you have free morning time).", glyph:G.lake, photoUrl:PHOTOS.lakezurich,
-            chips:[{t:"Golden hour",k:"tip"},{t:"15-20 min stop",k:"time"}] },
-
-          // ============ RETURN TO NIEDERDORF FOR DINNER ============
-          { kind:"transit", icon:"🚊", dur:"~6 min", cost:"Swiss Pass", mode:"Tram 4 or 15 from Bürkliplatz → Central (FREE on Swiss Pass). Saves the senior a 15-min walk back north along the river. Trams every few minutes." },
-          { kind:"transit", icon:"🚶", dur:"3 min", mode:"From Central tram stop, walk into Niederdorf — Rosengasse 10 is signposted, just off Niederdorfstrasse. Look for 'Imelda the Cow' statue at the entrance of Hotel Adler." },
-
-          // ============ DINNER — SWISS CHUCHI ============
-          { kind:"spot",    name:"Dinner — Swiss Chuchi (Hotel Adler, Rosengasse 10)", note:"Classic Niederdorf fondue institution — the first fondue parlour in Zürich's old town. 9 fondue variations (try the Adler Special or classic Moitié-Moitié), plus raclette, Zurich ragout with rösti, capuns, Wiener schnitzel. Cozy wood-panelled Swiss-chalet interior with the iconic painted 'Imelda the Cow' statue out front. ⚠️ RESERVATION ESSENTIAL — gets very busy. Fondue ~CHF 30-40/person; à la carte mains ~CHF 30-45. The whole restaurant smells strongly of cheese — that's the sign you're in the right place. Order ONE fondue per 2 people (it's huge), add a side soup or salad. They charge for tap water — order a carafe of wine or Rivella instead. Allow 90 min.", glyph:G.restaurant, photoUrl:PHOTOS.siwsschuchi,
-            chips:[{t:"Reserved 19:00",k:"tip"},{t:"~90 min",k:"time"}] },
-
-          // ============ RETURN TO HOTEL ============
-          { kind:"transit", icon:"🚶", dur:"3 min", mode:"After dinner, walk back to Central tram stop. Niederdorf is lively at night — buskers and lit-up alleys. Safe to walk anywhere here." },
-          { kind:"transit", icon:"🚊", dur:"~12 min", cost:"Swiss Pass", mode:"Tram from Central back to hotel (FREE on Swiss Pass). Trams run every few minutes until ~midnight; night network kicks in after." },
-          { kind:"hotel",   name:"Mama Shelter Zürich", note:"Back at hotel. Tomorrow morning: check Pilatus + Stanserhorn webcams at 06:30 to decide Day 12 plan (A/B/C).", photoUrl:PHOTOS.mama }
-        ]
+    { kind:"hotel",   name:"Check out — Spillstattstrasse 27", photoUrl:PHOTOS.grinhotel },
+    { kind:"transit", icon:"🚶", dur:"6 min", mode:"Walk down to Grindelwald Bahnhof. Final glance at the Eiger — say goodbye." },
+    { kind:"transit", icon:"🚂", dur:"34 min", cost:"Swiss Pass", mode:"Grindelwald → Interlaken Ost (BOB regional train). Sit LEFT side — last views of the valley + Lake Brienz approach. Board the FRONT of the train; the rear half splits at Zweilütschinen heading to Lauterbrunnen." },
+    { kind:"transit", icon:"🚂", dur:"~50 min", cost:"Swiss Pass", mode:"Interlaken Ost → Bern (IC61, runs hourly). Passes Lake Thun shoreline first 20 min — sit RIGHT for lake views." },
+    { kind:"transit", icon:"🚂", dur:"~1 hr", cost:"Swiss Pass", mode:"Bern → Zürich HB (IC1, every 30 min). Functional leg — senior can nap." },
+    { kind:"city",    name:"Zürich HB arrival", note:"Switzerland's largest train station. Follow signs to 'Ausgang' (Exit) → tram stops are directly outside on Bahnhofplatz. ⚠️ Alternative SCENIC route: via Lucerne (Luzern-Interlaken Express through Brünig Pass + 5 lakes) takes ~3h 25m vs ~2h 30m here — choose based on senior's energy after 2 nights in Grindelwald.", glyph:G.train, photoUrl:PHOTOS.zurichhb },
+    { kind:"transit", icon:"🚊", dur:"11 min", cost:"Swiss Pass", mode:"Tram from Bahnhofplatz/HB toward hotel (FREE on Swiss Pass — Zürich trams + buses all covered)." },
+    { kind:"hotel",   name:"Mama Shelter Zürich", note:"Drop bags & coffee. If room not ready, leave luggage at reception. Use the bathroom + change into comfortable walking shoes — the afternoon is a flat city loop (~5 km on cobblestones). ⚠️ Before leaving, BOOK Swiss Chuchi dinner for 19:00 if not done already (+41 44 266 96 96 or swiss-chuchi.ch).", photoUrl:PHOTOS.mama, chips:[{t:"Check-in",k:"time"},{t:"Reserve dinner now",k:"tip"}] },
+    { kind:"transit", icon:"🚊", dur:"~10 min", cost:"Swiss Pass", mode:"Tram back to Zürich HB / Bahnhofplatz. The walking loop starts at the station." },
+    { kind:"spot",    name:"Swiss National Museum (Landesmuseum)", note:"Switzerland's history in a fairytale castle building right next to the main station. Don't miss the inner courtyard (free, no ticket needed) — turreted facade. FREE entry with Swiss Pass. Allow 60–90 min if going inside; or just admire the architecture and skip the interior to save time for the walking loop.", glyph:G.museum, photoUrl:PHOTOS.swissmusuem,
+      chips:[{t:"FREE w/ pass",k:"pass"},{t:"60-90 min inside",k:"time"}] },
+    { kind:"transit", icon:"🚶", dur:"3 min", mode:"Cross the Bahnhofbrücke bridge — first view of the Limmat River" },
+    { kind:"spot",    name:"Bahnhofstrasse", note:"One of the world's most exclusive shopping streets — 1.4 km from the station to Lake Zürich. Watch Sprüngli (chocolate flagship, #21) and Confiserie Teuscher for window shopping. Senior tip: trams run the length of the street — hop on one stop if she tires.", glyph:G.market, photoUrl:PHOTOS.bahnhofstrasse,
+      chips:[{t:"Tram parallel",k:"tip"}] },
+    { kind:"transit", icon:"🚶", dur:"5 min", mode:"Cut left off Bahnhofstrasse at Rennweg, head toward the old town" },
+    { kind:"spot",    name:"Lindenhof", note:"Raised Roman-era hilltop square with linden trees — panoramic view over Zürich's old town and the Limmat. Site of a Roman castle, then a medieval fort. Lots of benches under the trees. Locals play giant chess in the back on weekends. FREE.", glyph:G.park, photoUrl:PHOTOS.lindenhof,
+      chips:[{t:"FREE",k:"free"},{t:"Photo spot",k:"tip"}] },
+    { kind:"transit", icon:"🚶", dur:"3 min", mode:"Walk DOWNHILL off Lindenhof to St. Peterhofstatt" },
+    { kind:"spot",    name:"St. Peter's Church", note:"The oldest parish church in Zürich, with the LARGEST CLOCK FACE IN EUROPE (8.7m diameter — bigger than Big Ben). Interior is free to enter, simple and peaceful. 5-min stop to look up at the clock from the square.", glyph:G.cathedral, photoUrl:PHOTOS.StPeterChurch,
+      chips:[{t:"FREE entry",k:"free"},{t:"Biggest clock in Europe",k:"tip"}] },
+    { kind:"transit", icon:"🚶", dur:"1 min" },
+    { kind:"spot",    name:"Augustinergasse", note:"One of Zürich's prettiest medieval lanes — narrow, cobbled, lined with guild houses and colourful painted oriel windows (Erker). Most-photographed street in the city. Best photo: stand at one end and shoot down the lane.", glyph:G.canal, photoUrl:PHOTOS.Augustinergasse,
+      chips:[{t:"Photo spot",k:"tip"}] },
+    { kind:"transit", icon:"🚶", dur:"3 min", mode:"Continue to the riverside Münsterhof square" },
+    { kind:"spot",    name:"Fraumünster", note:"Famous for Marc Chagall's stunning stained-glass windows (1970) — five vivid panels filling the Gothic choir with colour. Also has a Giacometti window in the transept. ⚠️ Entry is CHF 5 (NOT free on STP), but worth it — the windows are unique. No photos inside.", glyph:G.cathedral, photoUrl:PHOTOS.fraumunster,
+      chips:[{t:"CHF 5 entry",k:"ticket"},{t:"Chagall windows",k:"tip"}] },
+    { kind:"transit", icon:"🚶", dur:"3 min", mode:"Cross Münsterbrücke bridge to the east bank" },
+    { kind:"spot",    name:"Grossmünster", note:"Zürich's iconic twin-towered Romanesque cathedral — the city skyline icon. Built 12th century, where Huldrych Zwingli started the Swiss Reformation in 1520. Interior is FREE to enter (austere post-Reformation simplicity, plus modern Sigmar Polke stained-glass windows). Tower climb is CHF 5 — 187 steps for a panoramic Old Town view if energy allows.", glyph:G.cathedral, photoUrl:PHOTOS.Grossmünster,
+      chips:[{t:"Interior FREE",k:"free"},{t:"Tower CHF 5",k:"ticket"}] },
+    { kind:"transit", icon:"🚶", dur:"2 min" },
+    { kind:"spot",    name:"Niederdorf (Dörfli)", note:"Zürich's pedestrian-only medieval quarter — Niederdorfstrasse + side alleys lined with cafés, gelato shops, boutiques, street performers. The local heart of the Old Town. Coffee/cake stop: Café Schober (Napfgasse 4 — historic confectionery with painted ceilings, worth a peek inside even if not eating). Senior break point here. NOTE: Swiss Chuchi (dinner) is on Rosengasse just off Niederdorfstrasse — you're walking past it now, scout the location for later.", glyph:G.market, photoUrl:PHOTOS.Niederdorf,
+      chips:[{t:"Cafe stop",k:"tip"},{t:"Senior break",k:"tip"},{t:"Dinner is here",k:"tip"}] },
+    { kind:"transit", icon:"🚶", dur:"5 min", mode:"Wander south through Niederdorf, then cross Rathausbrücke back west" },
+    { kind:"spot",    name:"Rathaus (Town Hall) — exterior view", note:"Built 1694-1698, Renaissance style with Baroque touches. Looks like it's built directly INTO the Limmat River. Best photo angle: from Rathausbrücke bridge looking south. Not open for public visits — just admire from outside.", glyph:G.cathedral, photoUrl:PHOTOS.Rathaus,
+      chips:[{t:"Exterior only",k:"tip"}] },
+    { kind:"transit", icon:"🚶", dur:"10 min", mode:"Walk north along Limmatquai back toward the Landesmuseum dock (riverside path, flat)" },
+    { kind:"spot",    name:"Limmat River Cruise — Landesmuseum dock", note:"Board at 'Zürich Landesmuseum (See)' dock, just below the Swiss National Museum. New electric boats since 2023 — 'Fluvius', 'Navalis', 'Pontus' — glass roof, air-conditioned, partially wheelchair accessible. Confirmed running on Jun 7 (April-Oct season). One-way to Bürkliplatz = ~25 min. FREE with Swiss Pass. No reservation — just board. ⏰ Aim to catch a boat by ~17:30 so you're back in Niederdorf for the 19:00 dinner reservation.", glyph:G.ship, photoUrl:PHOTOS.limmat,
+      chips:[{t:"FREE w/ pass",k:"pass"},{t:"Glass roof",k:"tip"},{t:"~25 min one-way",k:"time"}] },
+    { kind:"transit", icon:"🚣", dur:"~25 min", cost:"Swiss Pass", mode:"Limmat boat: Landesmuseum → Limmatquai → Storchen → Bürkliplatz (disembark at the lake). You'll glide past everything you walked — Rathaus, Fraumünster, Grossmünster — from a new angle, then onto Lake Zürich. Choose outdoor deck at the back for best photos." },
+    { kind:"spot",    name:"Bürkliplatz / Lake Zürich", note:"Disembark at Bürkliplatz lakeside plaza. The Alps are visible behind the lake on clear days — golden-hour light at 18:00+ in June. Quick 15–20 min stop: walk a short stretch along the promenade, snap photos of the lake + swans, then turn back. ⚠️ Don't linger too long — you need to be back in Niederdorf for 19:00 dinner. Skip the Zürichhorn detour today (save it for tomorrow if you have free morning time).", glyph:G.lake, photoUrl:PHOTOS.lakezurich,
+      chips:[{t:"Golden hour",k:"tip"},{t:"15-20 min stop",k:"time"}] },
+    { kind:"transit", icon:"🚊", dur:"~6 min", cost:"Swiss Pass", mode:"Tram 4 or 15 from Bürkliplatz → Central (FREE on Swiss Pass). Saves the senior a 15-min walk back north along the river. Trams every few minutes." },
+    { kind:"transit", icon:"🚶", dur:"3 min", mode:"From Central tram stop, walk into Niederdorf — Rosengasse 10 is signposted, just off Niederdorfstrasse. Look for 'Imelda the Cow' statue at the entrance of Hotel Adler." },
+    { kind:"spot",    name:"Dinner — Swiss Chuchi (Hotel Adler, Rosengasse 10)", note:"Classic Niederdorf fondue institution — the first fondue parlour in Zürich's old town. 9 fondue variations (try the Adler Special or classic Moitié-Moitié), plus raclette, Zurich ragout with rösti, capuns, Wiener schnitzel. Cozy wood-panelled Swiss-chalet interior with the iconic painted 'Imelda the Cow' statue out front. ⚠️ RESERVATION ESSENTIAL — gets very busy. Fondue ~CHF 30-40/person; à la carte mains ~CHF 30-45. The whole restaurant smells strongly of cheese — that's the sign you're in the right place. Order ONE fondue per 2 people (it's huge), add a side soup or salad. They charge for tap water — order a carafe of wine or Rivella instead. Allow 90 min.", glyph:G.restaurant, photoUrl:PHOTOS.siwsschuchi,
+      chips:[{t:"Reserved 19:00",k:"tip"},{t:"~90 min",k:"time"}] },
+    { kind:"transit", icon:"🚶", dur:"3 min", mode:"After dinner, walk back to Central tram stop. Niederdorf is lively at night — buskers and lit-up alleys. Safe to walk anywhere here." },
+    { kind:"transit", icon:"🚊", dur:"~12 min", cost:"Swiss Pass", mode:"Tram from Central back to hotel (FREE on Swiss Pass). Trams run every few minutes until ~midnight; night network kicks in after." },
+    { kind:"hotel",   name:"Mama Shelter Zürich", note:"Back at hotel. Tomorrow morning: check Pilatus + Stanserhorn webcams at 06:30 to decide Day 12 plan (A/B/C).", photoUrl:PHOTOS.mama }
+  ]
 },
 
 // =========================================================
@@ -1431,16 +1417,12 @@ const ZH_TRANSLATIONS = {
   "Skip getting off — too much hassle with luggage (station is high up, town & castle are 10-min walk DOWN, then back UP). The famous postcard view of Spiez Castle, Lake Thun, and the Alps is visible directly from the train window and the station platform during the brief change. Sit LEFT side coming from Visp.": "不用下车——带着行李太麻烦了（车站很高，向下步行 10 分钟即可到达城镇和城堡，然后再返回）。在短暂的换乘期间，从车窗和站台上可以直接看到施皮茨城堡、图恩湖和阿尔卑斯山的著名明信片景观。坐在来自菲斯普的左侧。",
   "Grindelwald (1,034m)": "格林德瓦 (1,034m)",
   "Base of the Eiger north face. 2 nights here. Get off at 'Grindelwald' station — NOT Grindelwald Terminal (that's one stop earlier, only for Eiger Express).": "艾格峰北壁的底部。在这里住两晚。在“格林德瓦”站下车，而不是格林德瓦总站（比格林德瓦终点站早一站，仅适用于艾格峰快车）。",
-  "⭐ 梦幻山坡 Dream Hillside (First Garage area) — 第一次": "⭐ 梦幻山坡 梦幻山坡（第一车库区）—第一次",
-  " 网红'梦幻山坡'。山坡上的野花（6月初是青翠绿草+零星早开野花，非盛夏花海）配上雪山木屋背景，Eiger 北壁作前景，随手都是明信片。 ⚠️ 周边是私人民居，请勿进入私人土地，只能在 Dorfstrasse 公共路边/步道上拍。Google Maps 搜 'First Garage' 即可定位。第一次来：白天日光下试拍取景，下午再来拍金色时刻光线。": "网红‘梦幻山坡’。山坡上的野花（6月初是青翠绿草+零星早开野花，非盛夏花海）配上雪山木屋背景，艾格峰北壁作景，随手都是明信片。⚠️周边是私人民居，请勿进入私人土地，只能在Dorfstrasse公共路边/步道上拍。谷歌地图搜‘第一车库’即可定位。第一次来：白天光下试拍取景，下午再来拍金色时刻光线。",
   "Luftseilbahn Grindelwald-Pfingstegg": "格林德瓦-普芬斯特格航空列车",
   "Quick cable car (<5 min) up to 1,387m. New cabin since May 2025 — more comfortable, spectacular views of Eiger north face, Wetterhorn & Schreckhorn right above you. Season: 25 Apr – 25 Oct 2026, runs continuously every ~15-20 min. Address: Rybigässli 25.": "快速缆车（<5 分钟）可达 1,387m。自 2025 年 5 月起全新客舱 — 更舒适，艾格峰北壁、韦特洪峰和施雷克峰的壮丽景色就在您的上方。季节：2026 年 4 月 25 日至 10 月 25 日，每约 15-20 分钟连续运行一次。地址：Rybigässli 25。",
   "Pfingstegg Summer Toboggan (725m)": "Pfingstegg 夏季平底雪橇 (725m)",
   "Alpine slide on a fixed metal rail — much safer than a snow sled. Double-seat sleds with brake YOU control: go senior-comfortable pace or let it rip up to ~40 km/h. Automatic lift returns you to the top so you can ride multiple times. ⚠️ Closes immediately in rain. Hours June: ~9:00–17:00. Pay per ride at the station. Min age 4. Tip: 'FunPackage' bundles return cable car + 3 toboggan + 3 Fly-Line rides — better value if you all ride 3x.": "固定金属导轨上的高山滑梯 — 比雪橇安全得多。带刹车的双座雪橇由您控制：以高级舒适的速度行驶或让它加速到约 40 公里/小时。自动升降装置可让您返回顶部，以便您可以多次骑行。 ⚠️下雨天立即关闭。六月营业时间：~9:00–17:00。在车站按次付费。最小年龄 4 岁。提示：“FunPackage”捆绑往返缆车 + 3 个平底雪橇 + 3 次 Fly-Line 游乐设施 — 如果你们都乘坐 3 次，则更划算。",
   "Grindelwald village stroll + Coop": "格林德瓦村庄漫步 + 鸡舍",
   "Evening light on the Eiger is unreal. Walk the main street, stop at Coop (closes 19:00) for breakfast supplies and snacks. Senior can rest on a bench at the church while you shop.": "艾格峰上的傍晚灯光是不真实的。沿着主街漫步，在 Coop 停下来（19:00 关门）购买早餐和小吃。当您购物时，老年人可以在教堂的长凳上休息。",
-  "⭐ 梦幻山坡 Dream Hillside — 金色时刻 二次拍": "⭐ 梦幻山坡 梦幻山坡 — 金色时刻二次拍",
-  "晚上 19:00-20:30 之间是 Eiger 北壁被夕阳染成橙粉色的'阿尔卑斯辉光'(Alpenglow)。这是一天中最美的光线 —— 山坡的绿草 + 木屋剪影 + 燃烧的雪山，绝对是人生照片。6月初日落约 21:00，所以你有充足时间。 💡 提示：带轻外套，傍晚草地风凉。如果你拍人像，让人站在山坡前 + 远处雪山做背景，比中午拍更有层次。": "19:00-20:30 之间是艾格峰北壁被夕阳染成橙粉色的'轮廓辉光'(Alpenglow)。一天中最美的光线——这是晚上山坡的绿草+木屋曝光+燃烧的雪山，绝对是人生照片。6月初日落约21:00，所以你有充足的时间时间。💡提示：带轻海岸，沙滩草地风凉。如果你拍人像，让站在山坡前+远处雪山做背景，比中午拍更高层次。",
   "Skip getting off. The famous postcard view of Spiez Castle + Lake Thun is visible directly from the train window during the brief stop. Sit LEFT side coming from Visp.": "跳过下车。在短暂停留期间，从火车窗户可以直接看到明信片上著名的施皮茨城堡和图恩湖的景色。坐在来自菲斯普的左侧。",
   "Base of the Eiger north face. 2 nights here. Get off at 'Grindelwald' station — NOT Grindelwald Terminal (one stop earlier, only for Eiger Express).": "艾格峰北壁的底部。在这里住两晚。在“格林德瓦”站下车，而不是格林德瓦终点站（早一站，仅适用于艾格峰快车）。",
   "Interlaken Ost — boat dock": "因特拉肯东 — 游船码头",
