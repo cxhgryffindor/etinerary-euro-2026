@@ -1,4 +1,4 @@
-const CACHE = 'itinerary-v1';
+const CACHE = 'itinerary-v2';
 const IMAGE_EXTS = /\.(jpe?g|png|gif|webp|svg|ico)(\?.*)?$/i;
 
 self.addEventListener('install', () => self.skipWaiting());
