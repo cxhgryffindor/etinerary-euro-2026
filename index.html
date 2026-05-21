@@ -130,6 +130,17 @@ a{color:inherit;}
 .day-title em{font-style:normal;color:var(--muted);}
 .day-blurb{font-size:16px;line-height:1.6;color:var(--body);max-width:680px;margin:14px 0 0;}
 
+/* ---------- Plan selector ---------- */
+.plan-selector{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
+.plan-tab{display:flex;flex-direction:column;gap:3px;background:var(--surface-card);border:1.5px solid var(--hairline);cursor:pointer;padding:10px 18px;border-radius:var(--r-lg);text-align:left;transition:border-color .15s,background .15s;font-family:inherit;min-width:160px;}
+.plan-tab:hover{border-color:var(--ink);}
+.plan-tab.is-active{background:var(--ink);border-color:var(--ink);}
+.plan-tab-label{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand-coral);}
+.plan-tab.is-active .plan-tab-label{color:var(--brand-peach);}
+.plan-tab-title{font-size:13px;font-weight:500;color:var(--body-str);line-height:1.35;}
+.plan-tab.is-active .plan-tab-title{color:rgba(255,255,255,.85);}
+@media(max-width:600px){.plan-tab{min-width:0;width:100%;}}
+
 /* ---------- Layout split ---------- */
 .day-grid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start;}
 @media(max-width:960px){.day-grid{grid-template-columns:1fr;}}
@@ -357,6 +368,22 @@ a{color:inherit;}
 .vc-input:focus{border-bottom-color:var(--brand-coral);color:var(--ink);}
 .vc-input::placeholder{color:var(--hairline);}
 
+/* ---------- Stop schedule time row ---------- */
+.st-row{display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--hairline-soft);}
+.st-lbl{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-soft);white-space:nowrap;flex-shrink:0;}
+.st-time{font-size:12px;font-weight:600;color:var(--body);letter-spacing:.02em;white-space:nowrap;}
+.st-sep{font-size:11px;color:var(--muted-soft);flex-shrink:0;padding:0 2px;}
+.st-input{font-size:11px;background:transparent;border:0;border-bottom:1px dashed var(--hairline);color:var(--body);padding:2px 4px;width:62px;outline:none;transition:border-color .15s;font-family:var(--sans);}
+.st-input:focus{border-bottom-color:var(--brand-coral);color:var(--ink);}
+.st-input::placeholder{color:var(--hairline);}
+.st-badge{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:var(--r-pill);margin-left:2px;flex-shrink:0;}
+.st-badge.is-upcoming{background:var(--surface-card);color:var(--muted);border:1px solid var(--hairline);}
+.st-badge.is-soon{background:#fff8e6;color:#9a6500;border:1px solid var(--brand-ochre);}
+.st-badge.is-here{background:#e8f5f1;color:#1a5a4a;border:1px solid var(--brand-mint);animation:pulse-sched 1.8s ease-in-out infinite;}
+.st-badge.is-overdue{background:#fff0f0;color:#c0392b;border:1px solid #f0a0a0;}
+.st-badge.is-done{background:var(--surface-card);color:var(--muted-soft);border:1px solid var(--hairline-soft);}
+@keyframes pulse-sched{0%,100%{opacity:1;}50%{opacity:.55;}}
+
 /* ---------- Day cost estimate card ---------- */
 .est-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;}
 .est-head{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:10px 16px 8px;border-bottom:1px solid var(--hairline);}
@@ -449,7 +476,16 @@ const LS_TRANSIT    = 'eu26_transits';
 const LS_VISITCOSTS = 'eu26_visitcosts';
 const zhCache = (typeof ZH_TRANSLATIONS !== 'undefined') ? ZH_TRANSLATIONS : {};
 
-let state = { tab:'days', dayIdx:0 };
+let state = { tab:'days', dayIdx:0, planIdxMap:{} };
+
+function getActivePlanIdx(day){
+  if(!day.plans) return -1;
+  return state.planIdxMap[day.n] !== undefined ? state.planIdxMap[day.n] : 0;
+}
+function getActivePlan(day){
+  if(!day.plans || !day.plans.length) return null;
+  return day.plans[getActivePlanIdx(day)];
+}
 
 function getLocked() { return localStorage.getItem(LS_LOCK) !== 'false'; }
 function setLocked(v){ localStorage.setItem(LS_LOCK, v ? 'true' : 'false'); }
@@ -473,6 +509,45 @@ function getVisitCostEdit(dayN, idx){
   return all.hasOwnProperty(k) ? all[k] : null;
 }
 
+const LS_STOPTIMES = 'eu26_stoptimes';
+function getStopTimeEdits(){ try{ return JSON.parse(localStorage.getItem(LS_STOPTIMES)||'{}'); }catch(e){ return {}; } }
+function getStopTimeEdit(dayN, idx){
+  const k = `d${dayN}_i${idx}`;
+  const all = getStopTimeEdits();
+  return all.hasOwnProperty(k) ? all[k] : null;
+}
+
+function parseDayDate(dateStr){
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const m = dateStr.match(/\w+,?\s+(\w+)\s+(\d+)/);
+  if(!m) return null;
+  return new Date(2026, months[m[1]], parseInt(m[2]));
+}
+function isDayToday(day){
+  const d = parseDayDate(day.date);
+  if(!d) return false;
+  const now = new Date();
+  return d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth() && d.getDate()===now.getDate();
+}
+function timeToMins(t){
+  if(!t) return null;
+  const m = String(t).match(/^(\d{1,2}):(\d{2})/);
+  if(!m) return null;
+  return parseInt(m[1])*60+parseInt(m[2]);
+}
+function getSchedStatus(arrive, depart){
+  const now = new Date();
+  const nowMins = now.getHours()*60+now.getMinutes();
+  const arrMins = timeToMins(arrive);
+  const depMins = timeToMins(depart);
+  if(arrMins===null && depMins===null) return null;
+  if(depMins!==null && nowMins>depMins+30) return 'done';
+  if(depMins!==null && nowMins>depMins) return 'overdue';
+  if(arrMins!==null && nowMins>=arrMins) return 'here';
+  if(arrMins!==null && nowMins>=arrMins-20) return 'soon';
+  return 'upcoming';
+}
+
 /* ================================================================
    HELPERS
 ================================================================ */
@@ -489,7 +564,11 @@ function parseCostNum(s){
   const t = String(s).trim();
   if(/^free$/i.test(t)||t==='0') return 0;
   if(isPassCovered(t)) return null;
-  // Strip symbols, take first number (handles ranges like "60–90" → 60)
+  // Prefer explicit currency-prefixed amount (e.g. "CHF 25" or "€10") to avoid
+  // false concatenation when chip text contains other digits like "2h CHF 25" → 225
+  const currM = t.match(/(?:CHF|chf|€)\s*(\d+(?:\.\d+)?)/i);
+  if(currM) return parseFloat(currM[1]);
+  // Fallback: strip symbols, take first number (handles ranges like "60–90" → 60)
   const clean = t.replace(/[€CHFchfMYRmyr~≈\s,()\[\]a-zA-Z✓]/g,'');
   const m = clean.match(/(\d+(?:\.\d+)?)/);
   return m ? parseFloat(m[1]) : null;
@@ -676,8 +755,8 @@ function renderTrain(item){
     <div class="train-time">
       <b>${h(item.depart)} → ${h(item.arrive)}</b>
       <div>${h(item.date)} · <span style="${costColor}">${h(item.cost||'')}</span></div>
-      ${item.note?`<div style="font-size:10px;opacity:.6;margin-top:3px">${h(item.note)}</div>`:''}
     </div>
+    ${item.note?`<div style="grid-column:1/-1;font-size:11px;opacity:.7;padding-top:8px;border-top:1px solid rgba(255,255,255,.15);">${h(item.note)}</div>`:''}
   </div>`;
 }
 
@@ -728,6 +807,33 @@ function renderStop(item, kindClass, marker, dayN, idx, locked){
     }
   }
 
+  // Schedule time row
+  const stKey = `d${dayN}_i${idx}`;
+  const stEdit = getStopTimeEdit(dayN, idx);
+  const stArrive = (stEdit && stEdit.arrive !== undefined ? stEdit.arrive : '') || item.arrive || '';
+  const stDepart = (stEdit && stEdit.depart !== undefined ? stEdit.depart : '') || item.depart || '';
+  let schedTimeHtml = '';
+  if(!locked){
+    schedTimeHtml = `<div class="st-row">
+      <span class="st-lbl">Arrive</span>
+      <input class="st-input" type="time" placeholder="09:00" value="${h(stArrive)}" data-stkey="${h(stKey)}" data-stfield="arrive" />
+      <span class="st-sep">→</span>
+      <span class="st-lbl">Leave</span>
+      <input class="st-input" type="time" placeholder="10:30" value="${h(stDepart)}" data-stkey="${h(stKey)}" data-stfield="depart" />
+    </div>`;
+  } else if(stArrive || stDepart){
+    const dayObj = DAYS.find(d=>d.n===dayN);
+    const todayActive = dayObj ? isDayToday(dayObj) : false;
+    let badgeHtml = '';
+    if(todayActive){
+      const status = getSchedStatus(stArrive, stDepart);
+      const labels = {upcoming:'On Track',soon:'Arriving',here:'● Here Now',overdue:'⚠ Running Late',done:'✓ Done'};
+      if(status) badgeHtml = `<span class="st-badge is-${status}">${labels[status]}</span>`;
+    }
+    const timeRange = [stArrive, stDepart].filter(Boolean).join(' → ');
+    schedTimeHtml = `<div class="st-row"><span class="st-lbl">⏱</span><span class="st-time">${h(timeRange)}</span>${badgeHtml}</div>`;
+  }
+
   return `<div class="stop ${h(kindClass)}">
     <div class="stop-marker">${h(marker)}</div>
     <div class="stop-card">
@@ -737,6 +843,7 @@ function renderStop(item, kindClass, marker, dayN, idx, locked){
         <h3 class="stop-name">${h(item.name)}${nameCN?`<span class="zh-name">${h(nameCN)}</span>`:''}</h3>
         ${item.note?`<p class="stop-note">${h(item.note)}${noteCN?`<span class="zh-note">${h(noteCN)}</span>`:''}</p>`:''}
         ${item.time?`<div class="stop-meta"><span class="chip is-time">${h(item.time)}</span></div>`:''}
+        ${schedTimeHtml}
         ${chips}
         ${visitCostHtml}
       </div>
@@ -824,21 +931,35 @@ function renderSidebar(day){
    RENDER: Day view
 ================================================================ */
 function renderDayView(day, locked){
+  const plan = getActivePlan(day);
+  const title = plan ? plan.title : day.title;
+  const blurb = plan ? plan.blurb : day.blurb;
+  const dayForRender = plan ? Object.assign({}, day, { items: plan.items }) : day;
+
   const dateParts = day.date.split(', ');
   const eyebrow = dateParts[0] ? `Day ${day.n} · ${dateParts[0]}` : `Day ${day.n}`;
   const dateStr  = dateParts[1] || day.date;
 
+  const planSelector = day.plans ? `
+    <div class="plan-selector">
+      ${day.plans.map((p,i)=>`<button class="plan-tab${i===getActivePlanIdx(day)?' is-active':''}" data-plan="${i}">
+        <span class="plan-tab-label">${h(p.label)}</span>
+        <span class="plan-tab-title">${h(p.title)}</span>
+      </button>`).join('')}
+    </div>` : '';
+
   return `
     ${day.tentative ? `<div class="tentative"><div><b>TBD</b><br>This day is still being planned. Ideas and suggestions welcome!</div></div>` : ''}
     ${!locked ? `<div class="edit-notice">✏ Edit mode — fill in transport details below, then press Lock when done.</div>` : ''}
+    ${planSelector}
     <div class="day-head">
       <div class="day-eyebrow">${h(eyebrow)}</div>
-      <h2 class="day-title">${h(dateStr)} — <em>${h(day.title)}</em></h2>
-      <p class="day-blurb">${h(day.blurb)}</p>
+      <h2 class="day-title">${h(dateStr)} — <em>${h(title)}</em></h2>
+      <p class="day-blurb">${h(blurb)}</p>
     </div>
     <div class="day-grid">
-      <div>${renderTimeline(day, locked)}</div>
-      ${renderSidebar(day)}
+      <div>${renderTimeline(dayForRender, locked)}</div>
+      ${renderSidebar(dayForRender)}
     </div>`;
 }
 
@@ -1006,6 +1127,11 @@ function bindEvents(){
     btn.addEventListener('click',()=>{ state.tab=btn.dataset.tab; renderAll(); });
   });
 
+  // Plan tabs
+  root.querySelectorAll('.plan-tab[data-plan]').forEach(btn=>{
+    btn.addEventListener('click',()=>{ state.planIdxMap[DAYS[state.dayIdx].n]=parseInt(btn.dataset.plan); renderAll(); });
+  });
+
   // Rail
   root.querySelectorAll('.rail-item[data-idx]').forEach(btn=>{
     btn.addEventListener('click',()=>{ state.dayIdx=parseInt(btn.dataset.idx); renderAll(); });
@@ -1081,6 +1207,17 @@ function bindEvents(){
     });
   });
 
+  // Stop time inputs — save arrive/depart to localStorage
+  root.querySelectorAll('.st-input[data-stkey]').forEach(input=>{
+    input.addEventListener('change', e=>{
+      const { stkey, stfield } = e.target.dataset;
+      const all = getStopTimeEdits();
+      if(!all[stkey]) all[stkey] = {};
+      all[stkey][stfield] = e.target.value;
+      localStorage.setItem(LS_STOPTIMES, JSON.stringify(all));
+    });
+  });
+
   // Close icon pickers on outside click
   document.addEventListener('click',()=>{
     document.querySelectorAll('.icon-picker-dropdown.open').forEach(d=>d.classList.remove('open'));
@@ -1132,12 +1269,17 @@ document.getElementById('modal-pw').addEventListener('keydown', e=>{
 ================================================================ */
 async function generateZHData(){
   const texts = new Set();
-  DAYS.forEach(day => day.items.forEach(item => {
-    if(item.kind === 'spot' || item.kind === 'city'){
-      if(item.name) texts.add(item.name);
-      if(item.note) texts.add(item.note);
-    }
-  }));
+  DAYS.forEach(day => {
+    const allItems = day.items
+      ? day.items
+      : (day.plans || []).flatMap(p => p.items || []);
+    allItems.forEach(item => {
+      if(item.kind === 'spot' || item.kind === 'city'){
+        if(item.name) texts.add(item.name);
+        if(item.note) texts.add(item.note);
+      }
+    });
+  });
   const result = {};
   let done = 0;
   for(const text of texts){
