@@ -147,7 +147,7 @@ a{color:inherit;}
 
 /* ---------- Layout split ---------- */
 .day-grid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start;}
-@media(max-width:960px){.day-grid{grid-template-columns:1fr;}}
+@media(max-width:960px){.day-grid{grid-template-columns:1fr;}.side{position:static;}}
 
 /* ---------- Timeline ---------- */
 .timeline{position:relative;}
@@ -414,7 +414,7 @@ a{color:inherit;}
 @media(max-width:700px){
   .shell{padding:20px 16px 80px;}
   /* Tabs: pill container scrolls horizontally */
-  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;padding:4px;}
+  .tabs{overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;padding:4px;}
   .tabs::-webkit-scrollbar{display:none;}
   .tab{padding:9px 14px;white-space:nowrap;flex-shrink:0;}
   /* Sidebar: remove sticky so it flows naturally below timeline */
@@ -424,24 +424,17 @@ a{color:inherit;}
   /* Masthead: tighten up */
   .mast-flights{gap:12px;}
   .lock-btn{font-size:10px;padding:7px 10px;}
-  /* Stop card body: tighter padding when photo stacks above */
+  /* Stop card: stack photo above body, same width as content above */
+  .stop-card{grid-template-columns:1fr;}
+  .stop-photo{border-radius:var(--r-lg) var(--r-lg) 0 0;min-height:140px;border-right:0;border-bottom:1px solid var(--hairline);}
   .stop-body{padding:14px 16px 16px;}
-  /* Day head: tighten bottom margin */
   .day-head{margin-bottom:24px;}
-  /* Prevent stop + train items from overflowing the screen */
   .stop{min-width:0;}
   .stop-card{max-width:100%;}
   .train-seg{padding:14px 16px;gap:12px;}
   .pass-seg{padding:14px 16px;gap:10px;}
-  /* Transit edit wrap: allow wrapping on small screens */
   .transit-edit-wrap{flex-wrap:wrap;gap:6px;}
   .te-input{min-width:50px;}
-}
-/* Stack photo above body on ALL phone sizes including landscape —
-   matches the day-grid breakpoint so layout is consistent */
-@media(max-width:960px){
-  .stop-card{grid-template-columns:1fr;}
-  .stop-photo{border-radius:var(--r-lg) var(--r-lg) 0 0;min-height:140px;border-right:0;border-bottom:1px solid var(--hairline);}
 }
 @media(max-width:480px){
   .shell{padding:16px 12px 60px;}
